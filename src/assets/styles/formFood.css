@@ -1,0 +1,48 @@
+.foodform-container{
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 33.3333%;
+    background-color: #7EBE68;
+    color: white;
+    width: 500px;
+    height: 80%;
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+.subblock{
+    padding: 15px;
+}
+
+.div-foodform{
+    width: 100%;
+}
+
+.input-register{
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.label-register{
+    margin-inline: 10px;
+}
+
+.foodform-button{
+    margin-top: 10px;
+    width: 30%;
+    padding: 5px;
+    font-size: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.foodform-button:hover{
+    background-color: gray;
+    color: white;
+}
+
+.register-button:hover {
+    color: black;
+}
