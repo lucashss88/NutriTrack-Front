@@ -1,0 +1,61 @@
+.App-login {
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 35%;
+    margin-top: 10%;
+    background-color: #7EBE68;
+    color: white;
+    width: 450px;
+    height: 460px;
+    border-radius: 15px;
+}
+
+.login{
+    padding-inline: 10px;
+    font-size: 30px;
+}
+
+.label-login{
+    margin-inline: 10px;
+}
+
+.input-login{
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.login-button{
+    margin-top: 10px;
+    width: 30%;
+    padding: 5px;
+    font-size: 25px;
+    background-color: white;
+    color: #7EBE68;
+    border-radius: 10px;
+}
+
+.login-button:hover {
+    color: black;
+}
+
+.block-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo{
+    padding-top: 10px;
+    width: 100px;
+}
+
+.voltar:hover{
+    color: black;
+}
+
+.voltar{
+    color: #7EBE68;
+}

@@ -1,0 +1,42 @@
+.list-foods {
+    padding: 20px;
+    font-size: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+label, select, button {
+    margin: 10px;
+}
+
+.pagination{
+    text-align: center;
+}
+
+.btn-listfood {
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.btn-listfood:hover{
+    background-color: gray;
+    color: white;
+}
