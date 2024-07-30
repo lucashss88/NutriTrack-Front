@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './authContext';
 import Navbar from './navbar';
 import MainPage from './mainPage';
-import Diets from './diets';
+import DietForm from './dietForm';
 import Login from './login';
 import Register from './register';
 import ListFoods from './listfoods';
@@ -42,9 +42,9 @@ const App = () => {
                 <ToastContainer />
                 <Routes>
                     <Route path="/" element={<MainPage />} />
-                    <Route path="/diets" element={
+                    <Route path="/diet-form" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
-                            <Diets />
+                            <DietForm />
                         </ProtectedRoute>}
                     />
                     <Route path="/food-form/:id" element={

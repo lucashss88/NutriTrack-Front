@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const Diets = () => {
+const DietForm = () => {
   const [foodGroups, setFoodGroups] = useState([]);
   const [meals, setMeals] = useState([{ mealType: 'breakfast', foodGroups: [{ foodGroup: '', foods: [], food: '', quantity: '' }] }]);
   const [patients, setPatients] = useState([]);
@@ -67,9 +67,10 @@ const Diets = () => {
           'x-auth-token': token
         }
       });
-      console.log(`Foods for group ${group}:`, response.data);
-      newMeals[mealIndex].foodGroups[groupIndex].foods = response.data;
+      console.log(`Foods for group ${group}:`, response.data.foods);
+      newMeals[mealIndex].foodGroups[groupIndex].foods = response.data.foods; // Acessando o array foods corretamente
       setMeals(newMeals);
+      console.log('Updated meals:', newMeals);
     } catch (error) {
       console.error('Error loading foods:', error);
     }
@@ -243,6 +244,4 @@ const Diets = () => {
   );
 };
 
-export default Diets;
-
-
+export default DietForm;

@@ -26,11 +26,11 @@ const Home = () => {
               </h3>
             </div>
             <div className='home-block'>
-              <button onClick={() => navigate('/update-food')} className='button-home'>Listar Dieta</button>
+              <button onClick={() => navigate('/listdiets')} className='button-home'>Listar Dieta</button>
                 {role !== 'patient' && (
                     <>
                         <button onClick={() => navigate('/listfoods')} className='button-home'>Listar Alimentos</button>
-                        <button onClick={() => navigate('/diets')} className='button-home'>Criar Dieta</button>
+                        <button onClick={() => navigate('/diet-form')} className='button-home'>Criar Dieta</button>
                         <button onClick={() => navigate('/food-form')} className='button-home'>Criar Alimento</button>
                     </>
                 )}

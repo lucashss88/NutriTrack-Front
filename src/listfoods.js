@@ -119,6 +119,7 @@ const ListFoods = () => {
             <div>
                 <label>Escolha o Grupo de Alimento: </label>
                 <select
+                    className="input-register"
                     value={selectedFoodGroup}
                     onChange={handleSelectFoodGroup}
                 >
@@ -148,9 +149,8 @@ const ListFoods = () => {
                         <td>{food.calories}</td>
                         <td>{food.foodGroup}</td>
                         <td>
-                            <button className="btn-listfood">Visualizar</button>
-                            <button onClick={() => handleDelete(food.id)} className="btn-listfood">Deletar</button>
                             <button onClick={() => navigateToUpdate(food.id)} className="btn-listfood">Editar</button>
+                            <button onClick={() => handleDelete(food.id)} className="btn-listfood">Deletar</button>
                         </td>
                     </tr>
                 ))}

@@ -21,7 +21,7 @@ const FoodForm = () => {
     };
 
     const voltar = () => {
-        navigate('/home');
+        navigate('/listfoods');
     };
 
     useEffect(() => {

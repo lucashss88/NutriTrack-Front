@@ -83,7 +83,7 @@ const EditDiet = ({ patientId }) => {
 
   return (
     <div>
-      <h1>Your Diet</h1>
+      <h1>Sua Dieta</h1>
       <h3 onClick={voltar} className='voltar'>VOLTAR</h3>
       <ul>
         {diet.meals.map(meal => (
