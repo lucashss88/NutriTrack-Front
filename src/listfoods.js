@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import BackButton from './components/backbutton';
 
 const ListFoods = () => {
     const [foods, setFoods] = useState([]);
@@ -18,9 +19,6 @@ const ListFoods = () => {
         return localStorage.getItem('token');
     };
 
-    const voltar = () => {
-        navigate('/home');
-    };
 
     useEffect(() => {
         const fetchFoodGroups = async () => {
@@ -114,7 +112,7 @@ const ListFoods = () => {
 
     return (
         <div className="list-foods">
-            <h3 onClick={voltar} className='voltar'>VOLTAR</h3>
+            <BackButton />
             <h1>Lista de Alimentos</h1>
             <div>
                 <label>Escolha o Grupo de Alimento: </label>

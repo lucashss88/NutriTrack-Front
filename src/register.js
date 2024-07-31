@@ -34,8 +34,9 @@ const Register = () => {
             <div className='register'>
                 <form onSubmit={handleSubmit}>
                     <div className='block-form label-register'>
-                        <label>Username</label>
+                        <label>Usuário</label>
                         <input
+                            placeholder="Usuário"
                             className='input-register'
                             type="text"
                             value={username}
@@ -44,8 +45,9 @@ const Register = () => {
                         />
                     </div>
                     <div className='block-form label-register'>
-                        <label>Password</label>
+                        <label>Senha</label>
                         <input
+                            placeholder="Senha"
                             className='input-register'
                             type="password"
                             value={password}
@@ -54,16 +56,16 @@ const Register = () => {
                         />
                     </div>
                     <div className='block-form label-register'>
-                        <label>Role</label>
+                        <label>Tipo de Usuário</label>
                         <select value={role} onChange={(e) => setRole(e.target.value)} className='input-register'>
-                            <option value="patient">Patient</option>
-                            <option value="nutricionist">Nutricionist</option>
+                            <option value="patient">Paciente</option>
+                            <option value="nutricionist">Nutricionista</option>
                         </select>
                     </div>
-                    <button type="submit" className='register-button'>Register</button>
+                    <button type="submit" className='register-button'>Registrar</button>
                 </form>
             </div>
-            <h3 onClick={voltar} className='voltar'>VOLTAR</h3>
+            <h3 onClick={voltar} className='voltar txt-center'>Voltar</h3>
         </div>
     );
 };

@@ -9,15 +9,10 @@
   width: 500px;
   height: 80%;
   border-radius: 15px;
-  font-size: 20px;
-}
-
-.div-diets{
-  width: 100%;
+  padding-top: 10px;
 }
 
 .label-diets{
-  margin-inline: 10px;
   font-size: 20px;
 }
 
@@ -48,7 +43,12 @@
 }
 
 .subblock{
-  padding: 15px;
+}
+
+.dietform{
+  font-size: 25px;
+  padding-inline: 20px;
+  padding-bottom: 30px;
 }
 
 .navbar{
@@ -61,12 +61,18 @@
 }
 
 .btn-form{
-  width: 30%;
-  padding: 5px;
+  width: 100%;
+  margin-inline: 0px;
+  padding-block: 5px;
   font-size: 20px;
   background-color: white;
   color: black;
-  border-radius: 5px;
+  border-radius: 10px;
+}
+
+.btn-form:hover{
+  background-color: gray;
+  color: white;
 }
 
 .btn-add{

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import BackButton from './components/backbutton';
 
 const FoodForm = () => {
     const [name, setName] = useState('');
@@ -102,85 +103,93 @@ const FoodForm = () => {
     if (error) return <p>{error}</p>;
 
     return (
-      <div className="div-foodform">
-        <h3 onClick={voltar} className='voltar'>VOLTAR</h3>
+      <div>
+        <BackButton />
         <div className="foodform-container">
             <div className="subblock">
                 <div className="title">
                     <h1>{id ? 'Editar Alimento' : 'Criar Alimento'}</h1>
                 </div>
-                <form onSubmit={handleSubmit}>
-                    <div className='block-form label-register'>
-                        <label>Nome</label>
-                        <input
-                            className='input-register'
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Calorias</label>
-                        <input
-                            className='input-register'
-                            type="number"
-                            value={calories}
-                            onChange={(e) => setCalories(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Proteínas</label>
-                        <input
-                            className='input-register'
-                            type="number"
-                            step="0.01"
-                            value={protein}
-                            onChange={(e) => setProtein(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Carboidratos</label>
-                        <input
-                            className='input-register'
-                            type="number"
-                            step="0.01"
-                            value={carbs}
-                            onChange={(e) => setCarbs(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Gorduras</label>
-                        <input
-                            className='input-register'
-                            type="number"
-                            step="0.01"
-                            value={fat}
-                            onChange={(e) => setFat(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Grupo de Alimento</label>
-                        <select
-                            className='input-register'
-                            value={foodGroup}
-                            onChange={(e) => setFoodGroup(e.target.value)}
-                            required
-                        >
-                            <option value="">Escolha o Grupo de Alimento</option>
-                            {foodGroups.map((group) => (
-                                <option key={group} value={group}>
-                                    {group}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <button className='foodform-button' type="submit">{id ? 'Editar' : 'Criar'}</button>
-                </form>
+                <div className="foodform">
+                    <form onSubmit={handleSubmit}>
+                        <div className='block-form label-register'>
+                            <label>Nome</label>
+                            <input
+                                placeholder="Nome"
+                                className='input-register'
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Calorias</label>
+                            <input
+                                placeholder="Calorias"
+                                className='input-register'
+                                type="number"
+                                value={calories}
+                                onChange={(e) => setCalories(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Proteínas</label>
+                            <input
+                                placeholder="Proteínas"
+                                className='input-register'
+                                type="number"
+                                step="0.01"
+                                value={protein}
+                                onChange={(e) => setProtein(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Carboidratos</label>
+                            <input
+                                placeholder="Carboidratos"
+                                className='input-register'
+                                type="number"
+                                step="0.01"
+                                value={carbs}
+                                onChange={(e) => setCarbs(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Gorduras</label>
+                            <input
+                                placeholder="Gorduras"
+                                className='input-register'
+                                type="number"
+                                step="0.01"
+                                value={fat}
+                                onChange={(e) => setFat(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Grupo de Alimento</label>
+                            <select
+                                className='input-register'
+                                value={foodGroup}
+                                onChange={(e) => setFoodGroup(e.target.value)}
+                                required
+                            >
+                                <option value="">Escolha o Grupo de Alimento</option>
+                                {foodGroups.map((group) => (
+                                    <option key={group} value={group}>
+                                        {group}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <button className='foodform-button' type="submit">{id ? 'Editar' : 'Criar'}</button>
+                    </form>
+                </div>
+
             </div>
         </div>
       </div>

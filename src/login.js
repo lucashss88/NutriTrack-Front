@@ -42,35 +42,37 @@ const Login = () => {
     };
 
     return (
-        <div className='App-login'>
-            <img src={logo} className='logo' alt='Logo' />
-            <div className='login'>
-                <form onSubmit={handleLogin}>
-                    <div className='block-form label-login'>
-                        <label>Username</label>
-                        <input
-                            className='input-login'
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-login'>
-                        <label>Password</label>
-                        <input
-                            className='input-login'
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className='login-button'>Login</button>
-                </form>
+      <div className='App-login'>
+        <img src={logo} className='logo' alt='Logo' />
+        <div className='login'>
+          <form onSubmit={handleLogin}>
+            <div className='block-form label-login'>
+              <label>Usuário</label>
+              <input
+                placeholder="Usuário"
+                className='input-login'
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
             </div>
-            <h3 onClick={voltar} className='voltar'>VOLTAR</h3>
+            <div className='block-form label-login'>
+              <label>Senha</label>
+              <input
+                placeholder="Senha"
+                className='input-login'
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className='login-button'>Login</button>
+          </form>
         </div>
+          <h3 onClick={voltar} className='voltar-login txt-center'>Voltar</h3>
+      </div>
     );
 };
 

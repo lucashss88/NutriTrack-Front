@@ -14,6 +14,8 @@ import Logoutbutton from './logoutbutton';
 import ProtectedRoute from './protectedRoute';
 import Home from './home';
 import EditDiet from './editDiet';
+import ListDietsForNutricionist from './components/diets/listDietsForNutricionist';
+import ListDietsForPatient from './components/diets/listDietsForPatient';
 import './assets/styles/diets.css';
 import './assets/styles/index.css';
 import './assets/styles/login.css';
@@ -60,6 +62,18 @@ const App = () => {
                     <Route path="/food-form" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <FoodForm />
+                        </ProtectedRoute>}
+                    />
+
+                    <Route path="/nutricionist/diets" element={
+                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                            <ListDietsForNutricionist />
+                        </ProtectedRoute>}
+                    />
+
+                    <Route path="/patient/diets" element={
+                        <ProtectedRoute allowedRoles={['patient']}>
+                            <ListDietsForPatient />
                         </ProtectedRoute>}
                     />
                     <Route path="/login" element={<Login />} />

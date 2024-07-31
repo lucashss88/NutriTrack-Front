@@ -7,7 +7,7 @@ const MainPage = () => {
 
     return (
         <>
-            <div className="home-container">
+            <div className="main-container">
                 <div>
                     <img src={logo} className='logo-main' />
                 </div>

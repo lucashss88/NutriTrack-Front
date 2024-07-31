@@ -136,108 +136,108 @@ const DietForm = () => {
   };
 
   return (
-      <div className="div-diets">
-        <h3 onClick={voltar} className='voltar'>VOLTAR</h3>
+      <div>
+        <p onClick={voltar} className='voltar'>Voltar</p>
         <div className="App">
           <div className="subblock">
             <div className="title">
               <h1>Criar Dieta</h1>
             </div>
-            <form onSubmit={createDiet}>
-              <div className='block-form label-diets'>
-                <label>Data de início</label>
-                <input className="ipt-diets" type="date" name="startDate" required />
-              </div>
-              <div className='block-form label-diets'>
-                <label>Data final</label>
-                <input className="ipt-diets" type="date" name="endDate" required />
-              </div>
-              <div className='block-form label-diets'>
-                <label>Paciente</label>
-                <select
-                    className="ipt-diets"
-                    value={selectedPatient}
-                    onChange={(e) => setSelectedPatient(e.target.value)}
-                    required
-                >
-                  <option value="">Select Patient</option>
-                  {patients.map((patient) => (
-                      <option key={patient.id} value={patient.id}>
-                        {patient.username}
-                      </option>
-                  ))}
-                </select>
-              </div>
-              {meals.map((meal, mealIndex) => (
-                  <div key={mealIndex} className='block-form label-diets'>
-                    <label>Refeição</label>
-                    <select
-                        className="ipt-diets"
-                        value={meal.mealType}
-                        onChange={(e) => handleMealChange(mealIndex, 'mealType', e.target.value)}
-                    >
-                      <option value="breakfast">Breakfast</option>
-                      <option value="lunch">Lunch</option>
-                      <option value="afternoon snack">Afternoon Snack</option>
-                      <option value="dinner">Dinner</option>
-                      <option value="supper">Supper</option>
-                    </select>
-                    {meal.foodGroups.map((foodGroup, groupIndex) => (
-                        <div key={groupIndex} className='block-form label-diets'>
-                          <label>Grupo de alimentos</label>
-                          <select
-                              className="ipt-diets"
-                              value={foodGroup.foodGroup}
-                              onChange={(e) => handleFoodGroupChange(mealIndex, groupIndex, e)}
-                          >
-                            <option value="">Escolha o Grupo de Alimento</option>
-                            {foodGroups.map(group => (
-                                <option key={group} value={group}>{group}</option>
-                            ))}
-                          </select>
-                          {foodGroup.foodGroup && Array.isArray(foodGroup.foods) && (
-                              <>
-                                <div className='block-form label-diets'>
-                                  <label>Alimento</label>
-                                  <select
-                                      className="ipt-diets"
-                                      value={foodGroup.food}
-                                      onChange={(e) => handleFoodChange(mealIndex, groupIndex, 'food', e.target.value)}
-                                  >
-                                    <option value="">Escolha o Alimento</option>
-                                    {foodGroup.foods.map(food => (
-                                        <option key={food.id} value={food.id}>{food.name}</option>
-                                    ))}
-                                  </select>
-                                </div>
-                                <div className='block-form label-diets'>
-                                  <label>Quantidade (gramas ou medidas)</label>
-                                  <input
-                                      className="ipt-diets"
-                                      type="text"
-                                      value={foodGroup.quantity}
-                                      onChange={(e) => handleFoodChange(mealIndex, groupIndex, 'quantity', e.target.value)}
-                                  />
-                                </div>
-                                <button
-                                    type="button"
-                                    className="btn-remove"
-                                    onClick={() => removeFoodGroup(mealIndex, groupIndex)}
-                                >
-                                  Remover Alimento
-                                </button>
-                              </>
-                          )}
-                        </div>
+            <div className="dietform">
+              <form onSubmit={createDiet}>
+                <div className='block-form label-diets'>
+                  <label>Data de início</label>
+                  <input className="ipt-diets" type="date" name="startDate" required />
+                </div>
+                <div className='block-form label-diets'>
+                  <label>Data final</label>
+                  <input className="ipt-diets" type="date" name="endDate" required />
+                </div>
+                <div className='block-form label-diets'>
+                  <label>Paciente</label>
+                  <select
+                      className="ipt-diets"
+                      value={selectedPatient}
+                      onChange={(e) => setSelectedPatient(e.target.value)}
+                      required
+                  >
+                    <option value="">Select Patient</option>
+                    {patients.map((patient) => (
+                        <option key={patient.id} value={patient.id}>
+                          {patient.username}
+                        </option>
                     ))}
-                    <button className="btn-add" type="button" onClick={() => addFoodGroup(mealIndex)}>Adicionar alimento</button>
-                  </div>
-              ))}
-              <div>
-                <button type="button" onClick={addMeal} className="foodform-button">Adicionar Refeição</button>
-                <button type="submit" className="foodform-button">Criar Dieta</button>
-              </div>
-            </form>
+                  </select>
+                </div>
+                {meals.map((meal, mealIndex) => (
+                    <div key={mealIndex} className='block-form label-diets'>
+                      <label>Refeição</label>
+                      <select
+                          className="ipt-diets"
+                          value={meal.mealType}
+                          onChange={(e) => handleMealChange(mealIndex, 'mealType', e.target.value)}
+                      >
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="afternoon snack">Afternoon Snack</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="supper">Supper</option>
+                      </select>
+                      {meal.foodGroups.map((foodGroup, groupIndex) => (
+                          <div key={groupIndex} className='block-form label-diets'>
+                            <label>Grupo de alimentos</label>
+                            <select
+                                className="ipt-diets"
+                                value={foodGroup.foodGroup}
+                                onChange={(e) => handleFoodGroupChange(mealIndex, groupIndex, e)}
+                            >
+                              <option value="">Escolha o Grupo de Alimento</option>
+                              {foodGroups.map(group => (
+                                  <option key={group} value={group}>{group}</option>
+                              ))}
+                            </select>
+                            {foodGroup.foodGroup && Array.isArray(foodGroup.foods) && (
+                                <>
+                                  <div className='block-form label-diets'>
+                                    <label>Alimento</label>
+                                    <select
+                                        className="ipt-diets"
+                                        value={foodGroup.food}
+                                        onChange={(e) => handleFoodChange(mealIndex, groupIndex, 'food', e.target.value)}
+                                    >
+                                      <option value="">Escolha o Alimento</option>
+                                      {foodGroup.foods.map(food => (
+                                          <option key={food.id} value={food.id}>{food.name}</option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                  <div className='block-form label-diets'>
+                                    <label>Quantidade (gramas ou medidas)</label>
+                                    <input
+                                        className="ipt-diets"
+                                        type="text"
+                                        value={foodGroup.quantity}
+                                        onChange={(e) => handleFoodChange(mealIndex, groupIndex, 'quantity', e.target.value)}
+                                    />
+                                  </div>
+                                  <button
+                                      type="button"
+                                      className="btn-remove"
+                                      onClick={() => removeFoodGroup(mealIndex, groupIndex)}
+                                  >
+                                    Remover Alimento
+                                  </button>
+                                </>
+                            )}
+                          </div>
+                      ))}
+                      <button className="btn-add" type="button" onClick={() => addFoodGroup(mealIndex)}>Adicionar alimento</button>
+                    </div>
+                ))}
+                <button type="button" onClick={addMeal} className="btn-form">Adicionar Refeição</button>
+                <button type="submit" className="btn-form">Criar Dieta</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
