@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logo from './assets/images/NT2.png';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -17,10 +19,11 @@ const Register = () => {
         e.preventDefault();
         try {
             await axios.post('http://localhost:3001/api/auth/register', { username, password, role });
-            alert('Registration successful! Please login.');
+            toast.success('Registration successful! Please login.');
             setUsername('');
             setPassword('');
             setRole('patient');
+            navigate('/');
         } catch (err) {
             console.error('Error registering:', err);
             setError('Registration failed. Please try again.');

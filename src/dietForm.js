@@ -129,6 +129,7 @@ const DietForm = () => {
       });
       toast.success('Diet created successfully!');
       console.log('Diet created:', response.data);
+      navigate('/home');
     } catch (error) {
       console.error('Error creating diet:', error);
       toast.error('Error creating diet. Please, try again!');
@@ -161,7 +162,7 @@ const DietForm = () => {
                       onChange={(e) => setSelectedPatient(e.target.value)}
                       required
                   >
-                    <option value="">Select Patient</option>
+                    <option value="">Escolha o paciente</option>
                     {patients.map((patient) => (
                         <option key={patient.id} value={patient.id}>
                           {patient.username}
@@ -177,11 +178,11 @@ const DietForm = () => {
                           value={meal.mealType}
                           onChange={(e) => handleMealChange(mealIndex, 'mealType', e.target.value)}
                       >
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="afternoon snack">Afternoon Snack</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="supper">Supper</option>
+                        <option value="breakfast">Café da Manhã</option>
+                        <option value="lunch">Almoço</option>
+                        <option value="afternoon snack">Lanche da Tarde</option>
+                        <option value="dinner">Jantar</option>
+                        <option value="supper">Ceia</option>
                       </select>
                       {meal.foodGroups.map((foodGroup, groupIndex) => (
                           <div key={groupIndex} className='block-form label-diets'>

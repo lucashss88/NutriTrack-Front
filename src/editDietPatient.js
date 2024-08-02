@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-const EditDiet = ({ patientId }) => {
+const EditDietPatient = ({ patientId }) => {
   const [diet, setDiet] = useState(null);
   const [foods, setFoods] = useState([]);
   const [error, setError] = useState(null);
@@ -113,4 +113,4 @@ const EditDiet = ({ patientId }) => {
   );
 };
 
-export default EditDiet;
+export default EditDietPatient;

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BackButton from '../backbutton';
+import { useNavigate } from 'react-router-dom';
 
 const ListDietsForNutricionist = () => {
     const [diets, setDiets] = useState([]);
+    const navigate = useNavigate();
 
     const getNutricionistId = () => {
         const token = localStorage.getItem('token');
-        // Decodifique o token para obter o ID do nutricionista
         const payload = JSON.parse(atob(token.split('.')[1]));
         return payload.id;
     };
@@ -31,6 +32,14 @@ const ListDietsForNutricionist = () => {
         fetchDiets();
     }, []);
 
+    const handleViewDiet = (dietId) => {
+        navigate(`/view-diet/${dietId}`);
+    };
+
+    const handleEditDiet = (dietId) => {
+        navigate(`/edit-diet/${dietId}`);
+    };
+
     return (
         <div>
             <BackButton />
@@ -42,6 +51,7 @@ const ListDietsForNutricionist = () => {
                     <th>Data de Início</th>
                     <th>Data Final</th>
                     <th>Refeições</th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,7 +64,7 @@ const ListDietsForNutricionist = () => {
                             {diet.Meals && diet.Meals.length > 0 ? (
                                 diet.Meals.map(meal => (
                                     <div key={meal.id}>
-                                        <strong>{meal.type}</strong>: {meal.Foods && meal.Foods.length > 0 ? meal.Foods.map(food => (
+                                        <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
                                         <div key={food.id}>
                                             {food.name} ({food.MealFood.quantity}g)
                                         </div>
@@ -62,6 +72,10 @@ const ListDietsForNutricionist = () => {
                                     </div>
                                 ))
                             ) : 'Nenhuma refeição encontrada'}
+                        </td>
+                        <td>
+                            <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
+                            <button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>
                         </td>
                     </tr>
                 ))}

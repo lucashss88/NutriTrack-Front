@@ -13,9 +13,11 @@ import FoodForm from './foodForm';
 import Logoutbutton from './logoutbutton';
 import ProtectedRoute from './protectedRoute';
 import Home from './home';
-import EditDiet from './editDiet';
+import EditDietPatient from './editDietPatient';
 import ListDietsForNutricionist from './components/diets/listDietsForNutricionist';
 import ListDietsForPatient from './components/diets/listDietsForPatient';
+import ViewDiet from './viewDiet';
+import EditDietNutricionist from './editDietNutricionist';
 import './assets/styles/diets.css';
 import './assets/styles/index.css';
 import './assets/styles/login.css';
@@ -56,7 +58,7 @@ const App = () => {
                     />
                     <Route path="/update-food" element={
                         <ProtectedRoute allowedRoles={['patient']}>
-                            <EditDiet />
+                            <EditDietPatient />
                         </ProtectedRoute>}
                     />
                     <Route path="/food-form" element={
@@ -68,6 +70,18 @@ const App = () => {
                     <Route path="/nutricionist/diets" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <ListDietsForNutricionist />
+                        </ProtectedRoute>}
+                    />
+
+                    <Route path="/view-diet/:id" element={
+                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                            <ViewDiet />
+                        </ProtectedRoute>}
+
+                    />
+                    <Route path="/edit-diet/:id" element={
+                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                            <EditDietNutricionist />
                         </ProtectedRoute>}
                     />
 

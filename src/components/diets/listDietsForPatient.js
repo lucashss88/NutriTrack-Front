@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../authContext';
+import BackButton from '../backbutton';
 
 const ListDietsForPatient = () => {
     const [diets, setDiets] = useState([]);
@@ -28,6 +29,7 @@ const ListDietsForPatient = () => {
 
     return (
         <div>
+            <BackButton />
             <h1>Dietas do Paciente</h1>
             <table>
                 <thead>
