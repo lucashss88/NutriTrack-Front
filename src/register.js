@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logo from './assets/images/NT2.png';
@@ -9,24 +9,41 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('patient');
+    const [nutricionistId, setNutricionistId] = useState('');
+    const [nutricionists, setNutricionists] = useState([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchNutricionists = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/auth/nutricionists');
+                setNutricionists(response.data);
+            } catch (err) {
+                console.error('Error fetching nutricionists:', err);
+            }
+        };
+
+        fetchNutricionists();
+    }, []);
 
     const voltar = async () => {
         navigate('/');
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3001/api/auth/register', { username, password, role });
-            toast.success('Registration successful! Please login.');
+            await axios.post('http://localhost:3001/api/auth/register', { username, password, role, nutricionistId });
+            toast.success('Usuário registrado com sucesso. Realize o Login!');
             setUsername('');
             setPassword('');
             setRole('patient');
+            setNutricionistId('');
             navigate('/');
         } catch (err) {
             console.error('Error registering:', err);
-            setError('Registration failed. Please try again.');
+            setError('Erro no registro. Tente novamente!');
         }
     };
 
@@ -65,6 +82,23 @@ const Register = () => {
                             <option value="nutricionist">Nutricionista</option>
                         </select>
                     </div>
+                    {role === 'patient' && (
+                        <div className='block-form label-register'>
+                            <label>Nutricionista</label>
+                            <select
+                                value={nutricionistId}
+                                onChange={(e) => setNutricionistId(e.target.value)}
+                                className='input-register'
+                            >
+                                <option value="">Selecione um nutricionista</option>
+                                {nutricionists.map(nutricionist => (
+                                    <option key={nutricionist.id} value={nutricionist.id}>
+                                        {nutricionist.username}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                     <button type="submit" className='register-button'>Registrar</button>
                 </form>
             </div>

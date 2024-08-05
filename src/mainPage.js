@@ -13,7 +13,7 @@ const MainPage = () => {
                 </div>
                 <div className='main-block'>
                     <button onClick={() => navigate('/login')} className='button-main loginbt'>Login</button>
-                    <button onClick={() => navigate('/register')} className='button-main registerbt'>Register</button>
+                    <button onClick={() => navigate('/register')} className='button-main registerbt'>Registrar</button>
                 </div>
             </div>
         </>

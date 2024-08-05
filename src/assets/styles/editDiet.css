@@ -1,0 +1,47 @@
+.editdiet-container{
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 33.3333%;
+    background-color: #7EBE68;
+    color: white;
+    width: 500px;
+    height: 80%;
+    border-radius: 15px;
+    padding-top: 10px;
+}
+
+.subblock{
+
+}
+
+.editdiet{
+    font-size: 25px;
+    padding-inline: 20px;
+    padding-bottom: 30px;
+}
+
+.input-editdiet{
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.label-editdiet{
+    margin-inline: 10px;
+}
+
+.editdiet-button{
+    width: 98%;
+    margin-inline: 0px;
+    padding-block: 5px;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+}
+
+.editdiet-button:hover{
+    background-color: gray;
+    color: white;
+}

@@ -1,0 +1,23 @@
+.viewdiet-container{
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 33.3333%;
+    background-color: #7EBE68;
+    color: white;
+    width: 500px;
+    height: 80%;
+    border-radius: 15px;
+    padding-top: 10px;
+}
+
+.subblock{
+
+}
+
+.viewdiet{
+    font-size: 25px;
+    padding-inline: 20px;
+    padding-bottom: 30px;
+}

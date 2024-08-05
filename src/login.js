@@ -33,11 +33,11 @@ const Login = () => {
             } else {
                 const errorData = await response.json();
                 console.error('Error logging in:', errorData);
-                toast.error(errorData.msg || 'Login failed. Please try again.');
+                toast.error(errorData.msg || 'Erro no Login. Tente novamente!');
             }
         } catch (error) {
             console.error('Error logging in:', error);
-            toast.error('Login failed. Please try again.');
+            toast.error('Erro no Login. Tente novamente!');
         }
     };
 

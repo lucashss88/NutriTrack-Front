@@ -52,32 +52,41 @@ const EditDietNutricionist = () => {
     return (
         <div>
             <BackButton />
-            <h1>Editar Dieta</h1>
-            <form>
-                <div>
-                    <label>Data de Início:</label>
-                    <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                </div>
-                <div>
-                    <label>Data Final:</label>
-                    <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                </div>
-                <div>
-                    <label>Refeições:</label>
-                    {diet.Meals && diet.Meals.length > 0 ? (
-                        diet.Meals.map(meal => (
-                            <div key={meal.id}>
-                                <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
-                                <div key={food.id}>
-                                    {food.name} ({food.MealFood.quantity}g)
-                                </div>
-                            )) : 'Nenhuma comida encontrada'}
+            <div className="editdiet-container">
+                <div className="subblock">
+                    <div className="title">
+                        <h1>Editar Dieta</h1>
+                    </div>
+                    <div className="editdiet">
+                        <form>
+                            <div className='block-form label-editdiet'>
+                                <label>Data de Início:</label>
+                                <input className='input-editdiet' type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                             </div>
-                        ))
-                    ) : 'Nenhuma refeição encontrada'}
+                            <div className='block-form label-editdiet'>
+                                <label>Data Final:</label>
+                                <input className='input-editdiet' type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                            </div>
+                            <div className='block-form label-editdiet'>
+                                <label>Refeições:</label>
+                                {diet.Meals && diet.Meals.length > 0 ? (
+                                    diet.Meals.map(meal => (
+                                        <div key={meal.id}>
+                                            <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
+                                            <div key={food.id}>
+                                                {food.name} ({food.MealFood.quantity}g)
+                                            </div>
+                                        )) : 'Nenhuma comida encontrada'}
+                                        </div>
+                                    ))
+                                ) : 'Nenhuma refeição encontrada'}
+                            </div>
+                            <button type="button" className='editdiet-button' onClick={handleSave}>Salvar</button>
+                        </form>
+                    </div>
                 </div>
-                <button type="button" onClick={handleSave}>Salvar</button>
-            </form>
+            </div>
+
         </div>
     );
 };

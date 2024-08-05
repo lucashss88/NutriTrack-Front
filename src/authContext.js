@@ -44,14 +44,14 @@ export const AuthProvider = ({ children }) => {
         console.log('User set in context:', userData.user); // Log the user set in context
         console.log('Role set in context:', userData.user.role); // Log the role set in context
 
-        toast.success('Login successful!');
+        toast.success('Usuário logado com sucesso!');
     };
 
     const logout = () => {
         localStorage.removeItem('token');
         setUser(null);
         setRole(null);
-        toast.info('Logout successful!');
+        toast.info('Usuário deslogado com sucesso!');
     };
 
     return (

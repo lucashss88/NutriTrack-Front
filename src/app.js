@@ -26,6 +26,8 @@ import './assets/styles/listfoods.css';
 import './assets/styles/navbar.css';
 import './assets/styles/home.css';
 import './assets/styles/formFood.css';
+import './assets/styles/viewDiet.css';
+import './assets/styles/editDiet.css';
 
 const App = () => {
     const { user } = useAuth();

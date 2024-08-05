@@ -127,12 +127,12 @@ const DietForm = () => {
           'Content-Type': 'application/json'
         }
       });
-      toast.success('Diet created successfully!');
+      toast.success('Dieta criada com sucesso!');
       console.log('Diet created:', response.data);
       navigate('/home');
     } catch (error) {
       console.error('Error creating diet:', error);
-      toast.error('Error creating diet. Please, try again!');
+      toast.error('Erro na criação da dieta. Tente novamente!');
     }
   };
 

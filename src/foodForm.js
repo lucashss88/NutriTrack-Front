@@ -96,7 +96,7 @@ const FoodForm = () => {
       } catch (error) {
         console.error('Error saving food:', error);
         setError('Error saving food');
-        toast.error('Error saving food');
+        toast.error('Erro na criação do alimento. Tente novamente!');
       }
     };
 
