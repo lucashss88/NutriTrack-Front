@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './authContext';
-import Navbar from './navbar';
+// import Navbar from './navbar';
 import MainPage from './mainPage';
 import DietForm from './dietForm';
 import Login from './login';
@@ -58,11 +58,7 @@ const App = () => {
                             <FoodForm />
                         </ProtectedRoute>}
                     />
-                    <Route path="/update-food" element={
-                        <ProtectedRoute allowedRoles={['patient']}>
-                            <EditDietPatient />
-                        </ProtectedRoute>}
-                    />
+
                     <Route path="/food-form" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <FoodForm />
@@ -76,14 +72,20 @@ const App = () => {
                     />
 
                     <Route path="/view-diet/:id" element={
-                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                        <ProtectedRoute allowedRoles={['nutricionist', 'patient']}>
                             <ViewDiet />
                         </ProtectedRoute>}
 
                     />
-                    <Route path="/edit-diet/:id" element={
+                    <Route path="/edit-diet-nutricionist/:id" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <EditDietNutricionist />
+                        </ProtectedRoute>}
+                    />
+
+                    <Route path="/edit-diet-patient/:id" element={
+                        <ProtectedRoute allowedRoles={['patient']}>
+                            <EditDietPatient />
                         </ProtectedRoute>}
                     />
 

@@ -37,7 +37,7 @@ const ListDietsForNutricionist = () => {
     };
 
     const handleEditDiet = (dietId) => {
-        navigate(`/edit-diet/${dietId}`);
+        navigate(`/edit-diet-nutricionist/${dietId}`);
     };
 
     return (

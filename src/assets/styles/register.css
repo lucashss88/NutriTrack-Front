@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     margin-left: 35%;
-    margin-top: 10%;
+    padding-block: 5px;
     background-color: white;
     border: 2px solid black;
     color: #7EBE68;
@@ -32,6 +32,7 @@
     margin-top: 10px;
     width: 96%;
     margin-inline: 0px;
+    margin-bottom: 15px;
     padding: 5px;
     font-size: 20px;
     background-color: #7EBE68;
@@ -41,4 +42,14 @@
 
 .register-button:hover {
     color: black;
+}
+
+.logo-register{
+    text-align: center;
+    display: block;
+}
+
+.logo-register p{
+    font-weight: normal;
+    font-size: 25px;
 }

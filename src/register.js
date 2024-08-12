@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from './assets/images/NT2.png';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Backbutton from './components/backbutton';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -27,10 +28,6 @@ const Register = () => {
         fetchNutricionists();
     }, []);
 
-    const voltar = async () => {
-        navigate('/');
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -48,62 +45,68 @@ const Register = () => {
     };
 
     return (
-        <div className="register-container">
-            <img src={logo} className='logo'/>
-            {error && <p className="error">{error}</p>}
-            <div className='register'>
-                <form onSubmit={handleSubmit}>
-                    <div className='block-form label-register'>
-                        <label>Usuário</label>
-                        <input
-                            placeholder="Usuário"
-                            className='input-register'
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Senha</label>
-                        <input
-                            placeholder="Senha"
-                            className='input-register'
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className='block-form label-register'>
-                        <label>Tipo de Usuário</label>
-                        <select value={role} onChange={(e) => setRole(e.target.value)} className='input-register'>
-                            <option value="patient">Paciente</option>
-                            <option value="nutricionist">Nutricionista</option>
-                        </select>
-                    </div>
-                    {role === 'patient' && (
+        <div>
+            <Backbutton/>
+            <div className="logo-register">
+                <img src={logo} className='logo'/>
+                <p>Registre-se no NutriTrack</p>
+            </div>
+            <div className="register-container">
+                {error && <p className="error">{error}</p>}
+                <div className='register'>
+                    <form onSubmit={handleSubmit}>
                         <div className='block-form label-register'>
-                            <label>Nutricionista</label>
-                            <select
-                                value={nutricionistId}
-                                onChange={(e) => setNutricionistId(e.target.value)}
+                            <label>Usuário</label>
+                            <input
+                                placeholder="Usuário"
                                 className='input-register'
-                            >
-                                <option value="">Selecione um nutricionista</option>
-                                {nutricionists.map(nutricionist => (
-                                    <option key={nutricionist.id} value={nutricionist.id}>
-                                        {nutricionist.username}
-                                    </option>
-                                ))}
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Senha</label>
+                            <input
+                                placeholder="Senha"
+                                className='input-register'
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
+                            <label>Tipo de Usuário</label>
+                            <select value={role} onChange={(e) => setRole(e.target.value)} className='input-register'>
+                                <option value="patient">Paciente</option>
+                                <option value="nutricionist">Nutricionista</option>
                             </select>
                         </div>
-                    )}
-                    <button type="submit" className='register-button'>Registrar</button>
-                </form>
+                        {role === 'patient' && (
+                            <div className='block-form label-register'>
+                                <label>Nutricionista</label>
+                                <select
+                                    value={nutricionistId}
+                                    onChange={(e) => setNutricionistId(e.target.value)}
+                                    className='input-register'
+                                >
+                                    <option value="">Selecione um nutricionista</option>
+                                    {nutricionists.map(nutricionist => (
+                                        <option key={nutricionist.id} value={nutricionist.id}>
+                                            {nutricionist.username}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                        <button type="submit" className='register-button'>Registrar</button>
+                    </form>
+                </div>
             </div>
-            <h3 onClick={voltar} className='voltar txt-center'>Voltar</h3>
         </div>
+
     );
 };
 
