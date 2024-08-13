@@ -35,19 +35,20 @@ const Home = () => {
               <img src={logo} className='logo-home' />
             </div>
             <div className="text-home">
-              <h1>Seja Bem-Vindo ao NutriTrack!</h1>
-              <h2>VOCÊ É UM {roleName()}!</h2>
-              <h3>Este aplicativo ajuda profissionais de saúde e pacientes a gerenciar planos alimentares de maneira eficaz.
+              <h2>Seja Bem-Vindo ao NutriTrack!</h2>
+              <h3>VOCÊ É UM {roleName()}!</h3>
+              <h4>Este aplicativo ajuda profissionais de saúde e pacientes a gerenciar planos alimentares de maneira eficaz.
                   <br></br>Funcionalidades: <br></br><br></br>
                   - Registro e Login de Usuários - Crie e acesse sua conta com segurança. <br></br>
                   {features()}
-              </h3>
+              </h4>
             </div>
             <div className='home-block'>
                 {role === 'nutricionist' && (
                     <>
                         <button onClick={() => navigate('/nutricionist/diets')} className='button-home'>Listar Dieta</button>
                         <button onClick={() => navigate('/listfoods')} className='button-home'>Listar Alimentos</button>
+                        <button onClick={() => navigate('/listpatients')} className='button-home'>Listar Pacientes</button>
                         <button onClick={() => navigate('/diet-form')} className='button-home'>Criar Dieta</button>
                         <button onClick={() => navigate('/food-form')} className='button-home'>Criar Alimento</button>
                     </>

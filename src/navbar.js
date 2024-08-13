@@ -8,13 +8,12 @@ const Navbar = () => {
 
     return (
         <div className="navbar">
-            <nav>
+            <div>
                 <Link to="/">Home</Link>
                 <Link to="/diets">Create Diet</Link>
                 {user ? (
                     <>
                         <span>{user.username}</span>
-                        <Logoutbutton />
                     </>
                 ) : (
                     <>
@@ -23,7 +22,7 @@ const Navbar = () => {
                     </>
 
                 )}
-            </nav>
+            </div>
         </div>
 
     );

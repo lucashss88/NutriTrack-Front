@@ -11,6 +11,8 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('patient');
     const [nutricionistId, setNutricionistId] = useState('');
+    const [weight, setWeight] = useState('');
+    const [age, setAge] = useState('');
     const [nutricionists, setNutricionists] = useState([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -31,12 +33,21 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3001/api/auth/register', { username, password, role, nutricionistId });
+            await axios.post('http://localhost:3001/api/auth/register', {
+                username,
+                password,
+                role,
+                nutricionistId,
+                weight: role === 'patient' ? weight : null,
+                age: role === 'patient' ? age : null
+            });
             toast.success('Usuário registrado com sucesso. Realize o Login!');
             setUsername('');
             setPassword('');
             setRole('patient');
             setNutricionistId('');
+            setWeight('');
+            setAge('');
             navigate('/');
         } catch (err) {
             console.error('Error registering:', err);
@@ -58,7 +69,6 @@ const Register = () => {
                         <div className='block-form label-register'>
                             <label>Usuário</label>
                             <input
-                                placeholder="Usuário"
                                 className='input-register'
                                 type="text"
                                 value={username}
@@ -69,7 +79,6 @@ const Register = () => {
                         <div className='block-form label-register'>
                             <label>Senha</label>
                             <input
-                                placeholder="Senha"
                                 className='input-register'
                                 type="password"
                                 value={password}
@@ -85,21 +94,43 @@ const Register = () => {
                             </select>
                         </div>
                         {role === 'patient' && (
-                            <div className='block-form label-register'>
-                                <label>Nutricionista</label>
-                                <select
-                                    value={nutricionistId}
-                                    onChange={(e) => setNutricionistId(e.target.value)}
-                                    className='input-register'
-                                >
-                                    <option value="">Selecione um nutricionista</option>
-                                    {nutricionists.map(nutricionist => (
-                                        <option key={nutricionist.id} value={nutricionist.id}>
-                                            {nutricionist.username}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                            <>
+                                <div className='block-form label-register'>
+                                    <label>Nutricionista</label>
+                                    <select
+                                        value={nutricionistId}
+                                        onChange={(e) => setNutricionistId(e.target.value)}
+                                        className='input-register'
+                                    >
+                                        <option value="">Selecione um nutricionista</option>
+                                        {nutricionists.map(nutricionist => (
+                                            <option key={nutricionist.id} value={nutricionist.id}>
+                                                {nutricionist.username}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className='block-form label-register'>
+                                    <label>Peso (kg)</label>
+                                    <input
+                                        className='input-register'
+                                        type="number"
+                                        value={weight}
+                                        onChange={(e) => setWeight(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className='block-form label-register'>
+                                    <label>Idade</label>
+                                    <input
+                                        className='input-register'
+                                        type="number"
+                                        value={age}
+                                        onChange={(e) => setAge(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </>
                         )}
                         <button type="submit" className='register-button'>Registrar</button>
                     </form>

@@ -3,27 +3,27 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    margin-left: 35%;
+    margin-left: 40%;
     background-color: #7EBE68;
     color: white;
-    width: 30%;
+    width: 20%;
     height: 100%;
     border-radius: 15px;
 }
 
 .login{
-    font-size: 25px;
+    font-size: 15px;
     padding-inline: 20px;
 }
 
 .label-login{
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .input-login{
     border-radius: 5px;
     width: 100%;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .login-button{
@@ -31,7 +31,7 @@
     margin-inline: 0px;
     padding-block: 5px;
     width: 100%;
-    font-size: 20px;
+    font-size: 15px;
     background-color: white;
     color: black;
     border-radius: 10px;
@@ -65,7 +65,7 @@
 .logo-login p{
     color: #7EBE68;
     font-weight: normal;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .voltar:hover{

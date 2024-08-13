@@ -7,6 +7,7 @@ import BackButton from './components/backbutton';
 const EditDietPatient = () => {
   const { id: patientId } = useParams(); // Obtém o ID do paciente a partir dos parâmetros da URL
   const [diet, setDiet] = useState(null);
+  const [foods, setFoods] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +36,22 @@ const EditDietPatient = () => {
     fetchDiet();
   }, [patientId]);
 
-  const handleFoodChange = async (mealFoodId, newFoodId) => {
+  const handleFoodGroupChange = async (foodGroup) => {
+    try {
+      const token = loadToken();
+      const response = await axios.get(`http://localhost:3001/api/foods?group=${foodGroup}`, {
+        headers: {
+          'x-auth-token': token
+        }
+      });
+      setFoods(response.data);
+    } catch (error) {
+      console.error('Error fetching foods by group:', error);
+      setError('Error fetching foods by group');
+    }
+  };
+
+  const handleFoodChange = async (mealFoodId, newFoodId, foodGroup) => {
     try {
       const token = loadToken();
       await axios.put(`http://localhost:3001/api/diets/update-food`, {
@@ -54,12 +70,17 @@ const EditDietPatient = () => {
         }
       });
       setDiet(response.data);
-      toast.success('Alimento atualizado com sucesso!'); // Feedback ao usuário
+
+      // Atualiza os alimentos do grupo
+      await handleFoodGroupChange(foodGroup);
+
+      toast.success('Alimento atualizado com sucesso!');
     } catch (error) {
       console.error('Error updating food in diet:', error);
       setError('Error updating food in diet');
     }
   };
+
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>{error}</p>;
@@ -84,17 +105,20 @@ const EditDietPatient = () => {
                               <div key={mealFood.id}>
                                 <span>{mealFood.name} - {mealFood.MealFood.quantity}g</span>
                                 <select
-                                    className='input-editdiet'
-                                    value={mealFood.id}
-                                    onChange={(e) => handleFoodChange(mealFood.MealFood.id, e.target.value)}
+                                    value={mealFood.Food ? mealFood.Food.id : ''}
+                                    onFocus={() => {
+                                      handleFoodGroupChange(mealFood.Food ? mealFood.Food.foodGroup : '');
+                                    }}
+                                    onChange={(e) => {
+                                      handleFoodChange(mealFood.id, e.target.value, mealFood.Food ? mealFood.Food.foodGroup : '');
+                                    }}
                                 >
-                                  {diet.Meals.flatMap(m => m.Food)
-                                      .filter(food => food.foodGroup === mealFood.foodGroup)
-                                      .map(food => (
-                                          <option key={food.id} value={food.id}>
-                                            {food.name}
-                                          </option>
-                                      ))}
+                                  <option value="">Selecione um alimento</option>
+                                  {foods.length > 0 && foods.map(food => (
+                                      <option key={food.id} value={food.id}>
+                                        {food.name}
+                                      </option>
+                                  ))}
                                 </select>
                               </div>
                           )) : 'Nenhuma comida encontrada'}
