@@ -11,6 +11,24 @@ const ListPatients = () => {
         return localStorage.getItem('token');
     };
 
+    const noPatients = () => {
+        if (patients.length === 0) {
+            return <p>Nenhum paciente encontrado.</p>;
+        }
+    }
+
+    const calculateIMC = (weight, height) => {
+        const imc = weight / (height * height);
+        return imc.toFixed(2);
+    };
+
+    const getIMCCategory = (imc) => {
+        if (imc < 18.5) return 'Abaixo do peso';
+        if (imc >= 18.5 && imc < 24.9) return 'Peso normal';
+        if (imc >= 25 && imc < 29.9) return 'Sobrepeso';
+        if (imc >= 30) return 'Obesidade';
+    };
+
     useEffect(() => {
         const fetchPatients = async () => {
             try {
@@ -35,7 +53,7 @@ const ListPatients = () => {
 
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
-    if (patients.length === 0) return <p>Nenhum paciente encontrado.</p>;
+
 
     return (
         <div>
@@ -49,17 +67,28 @@ const ListPatients = () => {
                         <th>Tipo de usuário</th>
                         <th>Idade</th>
                         <th>Peso</th>
+                        <th>Altura</th>
+                        <th>IMC</th>
+                        <th>Categoria IMC</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {patients.map((patient) => (
-                        <tr key={patient.id}>
-                            <td>{patient.username}</td>
-                            <td>{patient.role}</td>
-                            <td>{patient.age}</td>
-                            <td>{patient.weight}</td>
-                        </tr>
-                    ))}
+                    {noPatients()}
+                    {patients.map((patient) => {
+                        const imc = calculateIMC(patient.weight, patient.height);
+                        const imcCategory = getIMCCategory(imc);
+                        return (
+                            <tr key={patient.id}>
+                                <td>{patient.username}</td>
+                                <td>{patient.role}</td>
+                                <td>{patient.age}</td>
+                                <td>{patient.weight} kg</td>
+                                <td>{patient.height} m</td>
+                                <td>{imc}</td>
+                                <td>{imcCategory}</td>
+                            </tr>
+                        );
+                    })}
                     </tbody>
                 </table>
             </div>

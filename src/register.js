@@ -9,9 +9,11 @@ import Backbutton from './components/backbutton';
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
     const [role, setRole] = useState('patient');
     const [nutricionistId, setNutricionistId] = useState('');
     const [weight, setWeight] = useState('');
+    const [height, setHeight] = useState('');
     const [age, setAge] = useState('');
     const [nutricionists, setNutricionists] = useState([]);
     const [error, setError] = useState('');
@@ -37,16 +39,20 @@ const Register = () => {
                 username,
                 password,
                 role,
+                name,
                 nutricionistId,
                 weight: role === 'patient' ? weight : null,
+                height: role === 'patient' ? height : null,
                 age: role === 'patient' ? age : null
             });
             toast.success('Usuário registrado com sucesso. Realize o Login!');
             setUsername('');
             setPassword('');
+            setName('');
             setRole('patient');
             setNutricionistId('');
             setWeight('');
+            setHeight('');
             setAge('');
             navigate('/');
         } catch (err) {
@@ -87,6 +93,16 @@ const Register = () => {
                             />
                         </div>
                         <div className='block-form label-register'>
+                            <label>Nome</label>
+                            <input
+                                className='input-register'
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className='block-form label-register'>
                             <label>Tipo de Usuário</label>
                             <select value={role} onChange={(e) => setRole(e.target.value)} className='input-register'>
                                 <option value="patient">Paciente</option>
@@ -117,6 +133,16 @@ const Register = () => {
                                         type="number"
                                         value={weight}
                                         onChange={(e) => setWeight(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className='block-form label-register'>
+                                    <label>Altura (m)</label>
+                                    <input
+                                        className='input-register'
+                                        type="number"
+                                        value={height}
+                                        onChange={(e) => setHeight(e.target.value)}
                                         required
                                     />
                                 </div>
