@@ -1,41 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Backbutton from './components/backbutton';
+import { MealsContext } from './mealsContext';
 
 const DietForm = () => {
-  const [foodGroups, setFoodGroups] = useState([]);
-  const [meals, setMeals] = useState([{ mealType: 'breakfast', foodGroups: [{ foodGroup: '', foods: [], food: '', quantity: '' }] }]);
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState('');
+  const { meals, setMeals } = useContext(MealsContext);
   const navigate = useNavigate();
 
   const loadToken = () => {
     return localStorage.getItem('token');
   };
-
-  const voltar = () => {
-    navigate('/home');
-  };
-
-  useEffect(() => {
-    const fetchFoodGroups = async () => {
-      try {
-        const token = loadToken();
-        const response = await axios.get('http://localhost:3001/api/foods/food-groups', {
-          headers: {
-            'x-auth-token': token
-          }
-        });
-        console.log('Food groups fetched:', response.data);
-        setFoodGroups(response.data);
-      } catch (error) {
-        console.error('Error loading food groups:', error);
-      }
-    };
-
-    fetchFoodGroups();
-  }, []);
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -55,53 +33,13 @@ const DietForm = () => {
     fetchPatients();
   }, []);
 
-  const handleFoodGroupChange = async (mealIndex, groupIndex, event) => {
-    const group = event.target.value;
-    const newMeals = [...meals];
-    newMeals[mealIndex].foodGroups[groupIndex].foodGroup = group;
-
-    try {
-      const token = loadToken();
-      const response = await axios.get(`http://localhost:3001/api/foods?group=${group}`, {
-        headers: {
-          'x-auth-token': token
-        }
-      });
-      console.log(`Foods for group ${group}:`, response.data.foods);
-      newMeals[mealIndex].foodGroups[groupIndex].foods = response.data.foods; // Acessando o array foods corretamente
-      setMeals(newMeals);
-      console.log('Updated meals:', newMeals);
-    } catch (error) {
-      console.error('Error loading foods:', error);
-    }
+  const removeMeal = (index) => {
+    const updatedMeals = meals.filter((meal, mealIndex) => mealIndex !== index);
+    setMeals(updatedMeals);
   };
 
-  const handleMealChange = (index, field, value) => {
-    const newMeals = [...meals];
-    newMeals[index][field] = value;
-    setMeals(newMeals);
-  };
-
-  const handleFoodChange = (mealIndex, groupIndex, field, value) => {
-    const newMeals = [...meals];
-    newMeals[mealIndex].foodGroups[groupIndex][field] = value;
-    setMeals(newMeals);
-  };
-
-  const addFoodGroup = (mealIndex) => {
-    const newMeals = [...meals];
-    newMeals[mealIndex].foodGroups.push({ foodGroup: '', foods: [], food: '', quantity: '' });
-    setMeals(newMeals);
-  };
-
-  const addMeal = () => {
-    setMeals([...meals, { mealType: 'breakfast', foodGroups: [{ foodGroup: '', foods: [], food: '', quantity: '' }] }]);
-  };
-
-  const removeFoodGroup = (mealIndex, groupIndex) => {
-    const newMeals = [...meals];
-    newMeals[mealIndex].foodGroups.splice(groupIndex, 1);
-    setMeals(newMeals);
+  const goToAddMeal = () => {
+    navigate('/add-meal');
   };
 
   const createDiet = async (event) => {
@@ -116,7 +54,7 @@ const DietForm = () => {
           foodIds: group.food ? [group.food] : [],
           quantities: group.food ? [group.quantity] : []
         }))
-      })).filter(meal => meal.foodGroups.some(group => group.foodIds.length > 0))
+      }))
     };
 
     try {
@@ -128,7 +66,7 @@ const DietForm = () => {
         }
       });
       toast.success('Dieta criada com sucesso!');
-      console.log('Diet created:', response.data);
+      setMeals([]);
       navigate('/home');
     } catch (error) {
       console.error('Error creating diet:', error);
@@ -138,7 +76,7 @@ const DietForm = () => {
 
   return (
       <div>
-        <p onClick={voltar} className='voltar'>Voltar</p>
+        <Backbutton/>
         <div className="App">
           <div className="subblock">
             <div className="title">
@@ -170,72 +108,18 @@ const DietForm = () => {
                     ))}
                   </select>
                 </div>
-                {meals.map((meal, mealIndex) => (
-                    <div key={mealIndex} className='block-form label-diets'>
-                      <label>Refeição</label>
-                      <select
-                          className="ipt-diets"
-                          value={meal.mealType}
-                          onChange={(e) => handleMealChange(mealIndex, 'mealType', e.target.value)}
-                      >
-                        <option value="breakfast">Café da Manhã</option>
-                        <option value="lunch">Almoço</option>
-                        <option value="afternoon snack">Lanche da Tarde</option>
-                        <option value="dinner">Jantar</option>
-                        <option value="supper">Ceia</option>
-                      </select>
-                      {meal.foodGroups.map((foodGroup, groupIndex) => (
-                          <div key={groupIndex} className='block-form label-diets'>
-                            <label>Grupo de alimentos</label>
-                            <select
-                                className="ipt-diets"
-                                value={foodGroup.foodGroup}
-                                onChange={(e) => handleFoodGroupChange(mealIndex, groupIndex, e)}
-                            >
-                              <option value="">Escolha o Grupo de Alimento</option>
-                              {foodGroups.map(group => (
-                                  <option key={group} value={group}>{group}</option>
-                              ))}
-                            </select>
-                            {foodGroup.foodGroup && Array.isArray(foodGroup.foods) && (
-                                <>
-                                  <div className='block-form label-diets'>
-                                    <label>Alimento</label>
-                                    <select
-                                        className="ipt-diets"
-                                        value={foodGroup.food}
-                                        onChange={(e) => handleFoodChange(mealIndex, groupIndex, 'food', e.target.value)}
-                                    >
-                                      <option value="">Escolha o Alimento</option>
-                                      {foodGroup.foods.map(food => (
-                                          <option key={food.id} value={food.id}>{food.name}</option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                  <div className='block-form label-diets'>
-                                    <label>Quantidade (gramas ou medidas)</label>
-                                    <input
-                                        className="ipt-diets"
-                                        type="text"
-                                        value={foodGroup.quantity}
-                                        onChange={(e) => handleFoodChange(mealIndex, groupIndex, 'quantity', e.target.value)}
-                                    />
-                                  </div>
-                                  <button
-                                      type="button"
-                                      className="btn-remove"
-                                      onClick={() => removeFoodGroup(mealIndex, groupIndex)}
-                                  >
-                                    Remover Alimento
-                                  </button>
-                                </>
-                            )}
-                          </div>
-                      ))}
-                      <button className="btn-add" type="button" onClick={() => addFoodGroup(mealIndex)}>Adicionar alimento</button>
+
+                {meals.map((meal, index) => (
+                    <div key={index} className='block-form label-diets'>
+                      <h4>Refeição: {meal.mealType}</h4>
+                      <button type="button" onClick={() => removeMeal(index)} className="btn-remove">
+                        Remover Refeição
+                      </button>
                     </div>
                 ))}
-                <button type="button" onClick={addMeal} className="btn-form">Adicionar Refeição</button>
+
+                <button type="button" onClick={goToAddMeal} className="btn-form">Adicionar Refeição</button>
+
                 <button type="submit" className="btn-form">Criar Dieta</button>
               </form>
             </div>

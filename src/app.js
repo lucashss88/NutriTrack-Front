@@ -19,6 +19,7 @@ import ListDietsForPatient from './components/diets/listDietsForPatient';
 import ViewDiet from './viewDiet';
 import EditDietNutricionist from './editDietNutricionist';
 import ListPatients from './listPatients';
+import AddMealForm from './components/diets/addMealForm';
 import './assets/styles/diets.css';
 import './assets/styles/index.css';
 import './assets/styles/login.css';
@@ -52,6 +53,11 @@ const App = () => {
                     <Route path="/diet-form" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <DietForm />
+                        </ProtectedRoute>}
+                    />
+                    <Route path="/add-meal" element={
+                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                            <AddMealForm />
                         </ProtectedRoute>}
                     />
                     <Route path="/food-form/:id" element={
