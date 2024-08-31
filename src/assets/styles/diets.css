@@ -101,6 +101,14 @@
   width: 100%;
 }
 
+.divMeal{
+  background-color: white;
+  color: green;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

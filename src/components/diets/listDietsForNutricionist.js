@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BackButton from '../backbutton';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ListDietsForNutricionist = () => {
     const [diets, setDiets] = useState([]);
@@ -40,6 +41,24 @@ const ListDietsForNutricionist = () => {
         navigate(`/edit-diet-nutricionist/${dietId}`);
     };
 
+    const handleDeleteDiet = async (dietId) => {
+        if (window.confirm('Tem certeza que deseja deletar esta dieta?')) {
+            try {
+                const token = localStorage.getItem('token');
+                await axios.delete(`http://localhost:3001/api/diets/${dietId}`, {
+                    headers: {
+                        'x-auth-token': token
+                    }
+                });
+                toast.success('Dieta removida com sucesso!');
+                setDiets(diets.filter(diet => diet.id !== dietId));
+            } catch (error) {
+                console.error('Erro ao deletar dieta:', error);
+                toast.error('Erro ao deletar dieta. Tente novamente!');
+            }
+        }
+    };
+
     return (
         <div>
             <BackButton />
@@ -76,6 +95,7 @@ const ListDietsForNutricionist = () => {
                         <td>
                             <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
                             <button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>
+                            <button onClick={() => handleDeleteDiet(diet.id)} className="btn-listfood">Deletar</button>
                         </td>
                     </tr>
                 ))}

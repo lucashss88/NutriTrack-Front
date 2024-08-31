@@ -111,7 +111,9 @@ const DietForm = () => {
 
                 {meals.map((meal, index) => (
                     <div key={index} className='block-form label-diets'>
-                      <h4>Refeição: {meal.mealType}</h4>
+                      <div className="divMeal">
+                        <p>Refeição: {meal.mealType}</p>
+                      </div>
                       <button type="button" onClick={() => removeMeal(index)} className="btn-remove">
                         Remover Refeição
                       </button>
