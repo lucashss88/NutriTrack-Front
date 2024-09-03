@@ -15,7 +15,7 @@ const ListDietsForPatient = () => {
     const patientId = user.id;
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedDiet, setSelectedDiet] = useState(null);  // Nova linha para armazenar a dieta selecionada
+    const [selectedDiet, setSelectedDiet] = useState(null); 
 
     useEffect(() => {
         const fetchDiets = async () => {
