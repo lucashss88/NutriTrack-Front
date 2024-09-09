@@ -23,7 +23,7 @@ const Register = () => {
     useEffect(() => {
         const fetchNutricionists = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/auth/nutricionists');
+                const response = await axios.get('https://nutritrack-back-production.up.railway.app/api/auth/nutricionists');
                 setNutricionists(response.data);
             } catch (err) {
                 console.error('Error fetching nutricionists:', err);
@@ -36,7 +36,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3001/api/auth/register', {
+            await axios.post('https://nutritrack-back-production.up.railway.app/api/auth/register', {
                 username,
                 password,
                 role,

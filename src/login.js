@@ -15,7 +15,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3001/api/auth/login', {
+            const response = await fetch('http://nutritrack-back-production.up.railway.app/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const Login = () => {
             if (response.ok) {
                 const userData = await response.json();
                 console.log('Response data:', userData);
-                login(userData); // Use the login function from AuthContext
+                login(userData);
                 navigate('/home');
             } else {
                 const errorData = await response.json();
