@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            // Fetch user info from API or decode token to get user info
             fetch('http://localhost:3001/api/auth/me', {
                 headers: {
                     'x-auth-token': token,

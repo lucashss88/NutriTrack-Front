@@ -5,35 +5,34 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './authContext';
 import Backbutton from './components/backbutton';
+import axios from 'axios';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
+    const API_URL = process.env.NEXT_PUBLIC_API_URL
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://nutritrack-back-production.up.railway.app/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
+            const response = await axios.post(`${API_URL}/api/auth/login`, {
+                username,
+                password,
             });
-            if (response.ok) {
-                const userData = await response.json();
+
+            if (response.status === 200) {
+                const userData = response.data;
                 console.log('Response data:', userData);
                 login(userData);
                 navigate('/home');
             } else {
-                const errorData = await response.json();
-                console.error('Error logging in:', errorData);
-                toast.error(errorData.msg || 'Erro no Login. Tente novamente!');
+                console.error('Error logging in:', response.data);
+                toast.error(response.data.msg || 'Erro no Login. Tente novamente!');
             }
         } catch (error) {
-            console.error('Error logging in:', error);
+            console.error('Error logging in:', error.response ? error.response.data : error);
             toast.error('Erro no Login. Tente novamente!');
         }
     };
