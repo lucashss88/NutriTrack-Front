@@ -12,7 +12,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
-    const API_URL = process.env.NEXT_PUBLIC_API_URL
+    const API_URL = process.env.REACT_APP_API_URL
 
     const handleLogin = async (e) => {
         e.preventDefault();
