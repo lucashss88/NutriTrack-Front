@@ -12,6 +12,7 @@ const ListFoods = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [noFoodsMessage, setNoFoodsMessage] = useState('');
     const itemsPerPage = 20;
     const navigate = useNavigate();
     const API_URL = process.env.REACT_APP_API_URL
@@ -56,6 +57,13 @@ const ListFoods = () => {
                 });
                 setFoods(response.data.foods);
                 setTotalPages(Math.ceil(response.data.total / itemsPerPage));
+
+                if (fetchedFoods.length === 0) {
+                    setNoFoodsMessage('Nenhum alimento encontrado para este grupo.');
+                } else {
+                    setNoFoodsMessage('');
+                }
+
             } catch (error) {
                 console.error('Error fetching foods:', error);
                 setError('Error fetching foods');
@@ -131,40 +139,49 @@ const ListFoods = () => {
                     ))}
                 </select>
             </div>
-            <table>
-                <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Proteínas</th>
-                    <th>Calorias</th>
-                    <th>Grupo de Alimento</th>
-                    <th>Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                {filteredFoods.map((food) => (
-                    <tr key={food.id}>
-                        <td>{food.name}</td>
-                        <td>{food.protein}</td>
-                        <td>{food.calories}</td>
-                        <td>{food.foodGroup}</td>
-                        <td>
-                            <button onClick={() => navigateToUpdate(food.id)} className="btn-listfood">Editar</button>
-                            <button onClick={() => handleDelete(food.id)} className="btn-listfood">Deletar</button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-            <div className="pagination">
-                <button className="btn-listfood" onClick={handlePreviousPage} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button className="btn-listfood" onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
+            
+            {noFoodsMessage && <p>{noFoodsMessage}</p>}
+            
+            {foods.length > 0 && (
+                <>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Proteínas</th>
+                            <th>Calorias</th>
+                            <th>Grupo de Alimento</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foods.map((food) => (
+                            <tr key={food.id}>
+                                <td>{food.name}</td>
+                                <td>{food.protein}</td>
+                                <td>{food.calories}</td>
+                                <td>{food.foodGroup}</td>
+                                <td>
+                                    <button onClick={() => navigateToUpdate(food.id)} className="btn-listfood">Editar</button>
+                                    <button onClick={() => handleDelete(food.id)} className="btn-listfood">Deletar</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+
+                    {/* Exibe a paginação */}
+                    <div className="pagination">
+                        <button className="btn-listfood" onClick={handlePreviousPage} disabled={currentPage === 1}>
+                            Previous
+                        </button>
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <button className="btn-listfood" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                            Next
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
