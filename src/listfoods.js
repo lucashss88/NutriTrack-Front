@@ -14,6 +14,7 @@ const ListFoods = () => {
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 20;
     const navigate = useNavigate();
+    const API_URL = process.env.REACT_APP_API_URL
 
     const loadToken = () => {
         return localStorage.getItem('token');
@@ -24,7 +25,7 @@ const ListFoods = () => {
         const fetchFoodGroups = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get('http://localhost:3001/api/foods/food-groups', {
+                const response = await axios.get(`${API_URL}/api/foods/food-groups`, {
                     headers: {
                         'x-auth-token': token
                     }
@@ -43,7 +44,7 @@ const ListFoods = () => {
         const fetchFoods = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get('http://localhost:3001/api/foods', {
+                const response = await axios.get(`${API_URL}/api/foods`, {
                     headers: {
                         'x-auth-token': token
                     },
@@ -87,7 +88,7 @@ const ListFoods = () => {
         if (window.confirm('Are you sure you want to delete this food?')) {
             try {
                 const token = loadToken();
-                await axios.delete(`http://localhost:3001/api/foods/${id}`, {
+                await axios.delete(`${API_URL}/api/foods/${id}`, {
                     headers: {
                         'x-auth-token': token
                     }
