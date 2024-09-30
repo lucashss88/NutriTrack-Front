@@ -15,13 +15,14 @@ const ListDietsForPatient = () => {
     const patientId = user.id;
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedDiet, setSelectedDiet] = useState(null); 
+    const [selectedDiet, setSelectedDiet] = useState(null);
+    const API_URL = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchDiets = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:3001/api/diets/patient/${patientId}`, {
+                const response = await axios.get(`${API_URL}/api/diets/patient/${patientId}`, {
                     headers: {
                         'x-auth-token': token
                     }

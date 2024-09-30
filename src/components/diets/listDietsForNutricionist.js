@@ -14,6 +14,7 @@ const ListDietsForNutricionist = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDiet, setSelectedDiet] = useState(null);
     const navigate = useNavigate();
+    const API_URL = process.env.REACT_APP_API_URL
 
     const getNutricionistId = () => {
       const token = localStorage.getItem('token');
@@ -26,7 +27,7 @@ const ListDietsForNutricionist = () => {
         try {
           const nutricionistId = getNutricionistId();
           const token = localStorage.getItem('token');
-          const response = await axios.get(`http://localhost:3001/api/diets/nutricionist/${nutricionistId}`, {
+          const response = await axios.get(`${API_URL}/api/diets/nutricionist/${nutricionistId}`, {
             headers: {
               'x-auth-token': token
             }
@@ -52,7 +53,7 @@ const ListDietsForNutricionist = () => {
       if (window.confirm('Tem certeza que deseja deletar esta dieta?')) {
         try {
           const token = localStorage.getItem('token');
-          await axios.delete(`http://localhost:3001/api/diets/${dietId}`, {
+          await axios.delete(`${API_URL}/api/diets/${dietId}`, {
             headers: {
               'x-auth-token': token
             }

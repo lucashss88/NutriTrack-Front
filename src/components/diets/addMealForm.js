@@ -8,6 +8,7 @@ const AddMealForm = () => {
     const [meal, setMeal] = useState({ mealType: 'Café da manhã', foodGroups: [{ foodGroup: '', foods: [], food: '', quantity: '' }] });
     const navigate = useNavigate();
     const { handleAddMeal } = useContext(MealsContext);
+    const API_URL = process.env.REACT_APP_API_URL
 
     const loadToken = () => {
         return localStorage.getItem('token');
@@ -17,7 +18,7 @@ const AddMealForm = () => {
         const fetchFoodGroups = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get('http://localhost:3001/api/foods/food-groups', {
+                const response = await axios.get(`${API_URL}/api/foods/food-groups`, {
                     headers: {
                         'x-auth-token': token
                     }
@@ -38,7 +39,7 @@ const AddMealForm = () => {
 
         try {
             const token = loadToken();
-            const response = await axios.get(`http://localhost:3001/api/foods?group=${group}`, {
+            const response = await axios.get(`${API_URL}/api/foods?group=${group}`, {
                 headers: {
                     'x-auth-token': token
                 }
