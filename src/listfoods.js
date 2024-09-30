@@ -49,7 +49,7 @@ const ListFoods = () => {
                         'x-auth-token': token
                     },
                     params: {
-                        foodGroup: selectedFoodGroup,
+                        group: selectedFoodGroup,
                         page: currentPage,
                         limit: itemsPerPage
                     }
