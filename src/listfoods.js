@@ -55,8 +55,8 @@ const ListFoods = () => {
                         limit: itemsPerPage
                     }
                 });
-                setFoods(response.data.foods);
-                setTotalPages(Math.ceil(response.data.total / itemsPerPage));
+
+                const fetchedFoods = response.data.foods;
 
                 if (fetchedFoods.length === 0) {
                     setNoFoodsMessage('Nenhum alimento encontrado para este grupo.');
@@ -64,6 +64,8 @@ const ListFoods = () => {
                     setNoFoodsMessage('');
                 }
 
+                setFoods(fetchedFoods);
+                setTotalPages(Math.ceil(response.data.total / itemsPerPage));
             } catch (error) {
                 console.error('Error fetching foods:', error);
                 setError('Error fetching foods');
