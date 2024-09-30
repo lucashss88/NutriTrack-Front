@@ -10,6 +10,7 @@ const EditDietPatient = () => {
   const [foods, setFoods] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_API_URL
 
   const loadToken = () => {
     return localStorage.getItem('token');
@@ -19,7 +20,7 @@ const EditDietPatient = () => {
     const fetchDiet = async () => {
       try {
         const token = loadToken();
-        const response = await axios.get(`http://localhost:3001/api/diets/${patientId}`, {
+        const response = await axios.get(`${API_URL}/api/diets/${patientId}`, {
           headers: {
             'x-auth-token': token
           }
@@ -39,7 +40,7 @@ const EditDietPatient = () => {
   const handleFoodGroupChange = async (foodGroup) => {
     try {
       const token = loadToken();
-      const response = await axios.get(`http://localhost:3001/api/foods?group=${foodGroup}`, {
+      const response = await axios.get(`${API_URL}/api/foods?group=${foodGroup}`, {
         headers: {
           'x-auth-token': token
         }
@@ -54,7 +55,7 @@ const EditDietPatient = () => {
   const handleFoodChange = async (mealFoodId, newFoodId, foodGroup) => {
     try {
       const token = loadToken();
-      await axios.put(`http://localhost:3001/api/diets/update-food`, {
+      await axios.put(`${API_URL}/api/diets/update-food`, {
         mealFoodId,
         newFoodId
       }, {
@@ -64,7 +65,7 @@ const EditDietPatient = () => {
       });
 
       // Atualiza a dieta após a mudança bem-sucedida
-      const response = await axios.get(`http://localhost:3001/api/diets/${patientId}`, {
+      const response = await axios.get(`${API_URL}/api/diets/${patientId}`, {
         headers: {
           'x-auth-token': token
         }

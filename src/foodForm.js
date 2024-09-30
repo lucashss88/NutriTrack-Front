@@ -16,6 +16,7 @@ const FoodForm = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { id } = useParams();
+    const API_URL = process.env.REACT_APP_API_URL
 
     const loadToken = () => {
       return localStorage.getItem('token');
@@ -29,7 +30,7 @@ const FoodForm = () => {
       const fetchFoodGroups = async () => {
         try {
           const token = loadToken();
-          const response = await axios.get('http://localhost:3001/api/foods/food-groups', {
+          const response = await axios.get(`${API_URL}/api/foods/food-groups`, {
             headers: {
               'x-auth-token': token
             }
@@ -49,7 +50,7 @@ const FoodForm = () => {
         const fetchFood = async () => {
           try {
             const token = loadToken();
-            const response = await axios.get(`http://localhost:3001/api/foods/${id}`, {
+            const response = await axios.get(`${API_URL}/api/foods/${id}`, {
               headers: {
                 'x-auth-token': token
               }
@@ -77,14 +78,14 @@ const FoodForm = () => {
 
       try {
         if (id) {
-          await axios.put(`http://localhost:3001/api/foods/${id}`, foodData, {
+          await axios.put(`${API_URL}/api/foods/${id}`, foodData, {
             headers: {
               'x-auth-token': token
             }
           });
           toast.success('Alimento editado com sucesso!');
         } else {
-          await axios.post('http://localhost:3001/api/foods', foodData, {
+          await axios.post(`${API_URL}/api/foods`, foodData, {
             headers: {
               'x-auth-token': token
             }

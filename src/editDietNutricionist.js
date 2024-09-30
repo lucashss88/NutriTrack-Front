@@ -9,12 +9,13 @@ const EditDietNutricionist = () => {
     const [diet, setDiet] = useState(null);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const API_URL = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchDiet = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:3001/api/diets/${id}`, {
+                const response = await axios.get(`${API_URL}/api/diets/${id}`, {
                     headers: {
                         'x-auth-token': token
                     }
@@ -33,7 +34,7 @@ const EditDietNutricionist = () => {
     const handleSave = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:3001/api/diets/${id}`, {
+            await axios.put(`${API_URL}/api/diets/${id}`, {
                 startDate,
                 endDate,
             }, {

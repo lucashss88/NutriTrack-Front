@@ -7,11 +7,12 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [role, setRole] = useState(null);
     const [loading, setLoading] = useState(true);
+    const API_URL = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            fetch('http://localhost:3001/api/auth/me', {
+            fetch(`${API_URL}/api/auth/me`, {
                 headers: {
                     'x-auth-token': token,
                 },

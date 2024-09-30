@@ -6,12 +6,13 @@ import BackButton from './components/backbutton';
 const ViewDiet = () => {
     const { id } = useParams();
     const [diet, setDiet] = useState(null);
+    const API_URL = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchDiet = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:3001/api/diets/${id}`, {
+                const response = await axios.get(`${API_URL}/api/diets/${id}`, {
                     headers: {
                         'x-auth-token': token
                     }

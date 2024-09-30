@@ -10,6 +10,7 @@ const DietForm = () => {
   const [selectedPatient, setSelectedPatient] = useState('');
   const { meals, setMeals } = useContext(MealsContext);
   const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL
 
   const loadToken = () => {
     return localStorage.getItem('token');
@@ -19,7 +20,7 @@ const DietForm = () => {
     const fetchPatients = async () => {
       try {
         const token = loadToken();
-        const response = await axios.get('http://localhost:3001/api/auth/patients', {
+        const response = await axios.get(`${API_URL}/api/auth/patients`, {
           headers: {
             'x-auth-token': token
           }
@@ -59,7 +60,7 @@ const DietForm = () => {
 
     try {
       const token = loadToken();
-      const response = await axios.post('http://localhost:3001/api/diets', dietData, {
+      const response = await axios.post(`${API_URL}/api/diets`, dietData, {
         headers: {
           'x-auth-token': token,
           'Content-Type': 'application/json'

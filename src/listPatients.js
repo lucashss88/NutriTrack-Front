@@ -6,6 +6,7 @@ const ListPatients = () => {
     const [patients, setPatients] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const API_URL = process.env.REACT_APP_API_URL
 
     const loadToken = () => {
         return localStorage.getItem('token');
@@ -33,7 +34,7 @@ const ListPatients = () => {
         const fetchPatients = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get('http://localhost:3001/api/auth/patients', {
+                const response = await axios.get(`${API_URL}/api/auth/patients`, {
                     headers: {
                         'x-auth-token': token
                     }
