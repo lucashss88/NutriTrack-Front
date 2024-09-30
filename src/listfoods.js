@@ -82,6 +82,7 @@ const ListFoods = () => {
 
     const handleSelectFoodGroup = (event) => {
         setSelectedFoodGroup(event.target.value);
+        setCurrentPage(1);
     };
 
     const handleDelete = async (id) => {
