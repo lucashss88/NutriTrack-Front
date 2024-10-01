@@ -58,6 +58,7 @@ const DietForm = () => {
       }))
     };
 
+    console.log(dietData);
     try {
       const token = loadToken();
       const response = await axios.post(`${API_URL}/api/diets`, dietData, {
