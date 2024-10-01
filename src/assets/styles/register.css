@@ -53,3 +53,50 @@
     font-weight: normal;
     font-size: 20px;
 }
+
+/* Regras de mídia para tablets */
+@media (max-width: 768px) {
+    .register-container {
+        width: 80%; /* Ajuste para tablets */
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .register-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .logo-register p {
+        font-size: 18px;
+    }
+
+    .input-register {
+        font-size: 14px;
+    }
+}
+
+/* Regras de mídia para smartphones */
+@media (max-width: 480px) {
+    .register-container {
+        width: 90%; /* Ajuste para smartphones */
+        padding: 15px;
+    }
+
+    .register-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .logo-register p {
+        font-size: 16px;
+    }
+
+    .input-register {
+        font-size: 13px;
+    }
+
+    .register {
+        font-size: 14px;
+    }
+}

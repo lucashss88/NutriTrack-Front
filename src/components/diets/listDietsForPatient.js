@@ -160,7 +160,7 @@ const ListDietsForPatient = () => {
                         </td>
                         <td>
                             <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
-                            <button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>
+                            {/*<button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>*/}
                             <button onClick={() => handleDownloadClick(diet)} className="btn-listfood">Download</button>
                         </td>
                     </tr>

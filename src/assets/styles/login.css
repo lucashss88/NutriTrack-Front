@@ -89,3 +89,44 @@
 .txt-center{
     text-align: center;
 }
+
+/* Regras de mídia para telas pequenas */
+@media (max-width: 768px) {
+    .App-login {
+        width: 80%; /* Ajuste para tablets */
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .login-button {
+        margin-top: 15%;
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 80px; /* Reduzir o tamanho do logo em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .App-login {
+        width: 90%; /* Ajuste para smartphones */
+        padding: 15px;
+    }
+
+    .login-button {
+        font-size: 14px;
+    }
+
+    .logo-login p {
+        font-size: 18px;
+    }
+
+    .input-login {
+        font-size: 14px;
+    }
+
+    .login {
+        font-size: 14px;
+    }
+}

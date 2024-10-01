@@ -183,7 +183,7 @@ const ListDietsForNutricionist = () => {
                   ) : 'Nenhuma refeição encontrada'}
                 </td>
                 <td>
-                  <button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>
+                  {/*<button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>*/}
                   <button onClick={() => handleDeleteDiet(diet.id)} className="btn-listfood">Deletar</button>
                   <button onClick={() => handleDownloadClick(diet)} className="btn-listfood">Download</button>
                 </td>
