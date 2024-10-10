@@ -152,6 +152,16 @@ const ListDietsForPatient = () => {
                                         <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
                                         <div key={food.id}>
                                             {food.name} ({food.MealFood.quantity}g)
+                                            {food.MealFood.substitutes && food.MealFood.substitutes.length > 0 && (
+                                                <div>
+                                                    <strong>Substitutos:</strong>
+                                                    <ul>
+                                                        {food.MealFood.substitutes.map(sub => (
+                                                            <li key={sub.id}>{sub.name} ({sub.quantity}g)</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
                                         </div>
                                     )) : 'Nenhuma comida encontrada'}
                                     </div>

@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import BackButton from './components/backbutton';
+import { toast } from 'react-toastify';
 
 const EditDietNutricionist = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [diet, setDiet] = useState(null);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const API_URL = process.env.REACT_APP_API_URL
+    const [meals, setMeals] = useState([]);
+    const [foodGroups, setFoodGroups] = useState([]);
+    const [foods, setFoods] = useState([]);
+    const API_URL = process.env.REACT_APP_API_URL;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDiet = async () => {
@@ -21,34 +25,91 @@ const EditDietNutricionist = () => {
                     }
                 });
                 setDiet(response.data);
-                setStartDate(response.data.startDate.split('T')[0]);
-                setEndDate(response.data.endDate.split('T')[0]);
+                setStartDate(new Date(response.data.startDate).toISOString().split('T')[0]);
+                setEndDate(new Date(response.data.endDate).toISOString().split('T')[0]);
+                setMeals(response.data.Meals || []);
             } catch (error) {
-                console.error('Error fetching diet:', error);
+                console.error('Error fetching diet: ', error);
+            }
+        };
+
+        const fetchFoodGroups = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${API_URL}/api/foods/food-groups`, {
+                    headers: {
+                        'x-auth-token': token
+                    }
+                });
+                setFoodGroups(response.data);
+            } catch (error) {
+                console.error('Error fetching food groups: ', error);
             }
         };
 
         fetchDiet();
+        fetchFoodGroups();
     }, [id]);
 
-    const handleSave = async () => {
+    const handleFoodGroupChange = async (mealIndex, group) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`${API_URL}/api/diets/${id}`, {
-                startDate,
-                endDate,
-            }, {
+            const response = await axios.get(`${API_URL}/api/foods?group=${group}`, {
                 headers: {
                     'x-auth-token': token
                 }
             });
-            navigate('/diets');
+            const updatedMeals = [...meals];
+            updatedMeals[mealIndex].availableFoods = response.data.foods; // Armazena alimentos disponíveis
+            setMeals(updatedMeals);
         } catch (error) {
-            console.error('Error updating diet:', error);
+            console.error('Error fetching foods by group: ', error);
         }
     };
 
-    if (!diet) return <div>Loading...</div>;
+    const handleFoodChange = (mealIndex, foodIndex, value) => {
+        const updatedMeals = [...meals];
+        updatedMeals[mealIndex].Food[foodIndex].id = value; // Atualiza o ID do alimento
+        setMeals(updatedMeals);
+    };
+
+    // Adiciona a função para atualizar a quantidade
+    const handleQuantityChange = (mealIndex, foodIndex, value) => {
+        const updatedMeals = [...meals];
+        updatedMeals[mealIndex].Food[foodIndex].MealFood.quantity = value; // Atualiza a quantidade
+        setMeals(updatedMeals);
+    };
+
+    const handleSaveDiet = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('token');
+            const updatedDiet = {
+                startDate,
+                endDate,
+                meals: meals.map(meal => ({
+                    type: meal.type,
+                    foodIds: meal.Food.map(food => food.id),
+                    quantities: meal.Food.map(food => food.MealFood.quantity)
+                }))
+            };
+
+            await axios.put(`${API_URL}/api/diets/${id}`, updatedDiet, {
+                headers: {
+                    'x-auth-token': token,
+                    'Content-Type': 'application/json'
+                }
+            });
+            toast.success('Dieta atualizada com sucesso!');
+            navigate('/nutricionist/diets');
+            console.log(updatedDiet);
+        } catch (error) {
+            console.error('Error updating diet: ', error);
+            toast.error('Erro ao atualizar a dieta. Tente novamente!');
+        }
+    };
+
+    if (!diet) return <div>Carregando...</div>;
 
     return (
         <div>
@@ -59,7 +120,7 @@ const EditDietNutricionist = () => {
                         <h1>Editar Dieta</h1>
                     </div>
                     <div className="editdiet">
-                        <form>
+                        <form onSubmit={handleSaveDiet}>
                             <div className='block-form label-editdiet'>
                                 <label>Data de Início:</label>
                                 <input className='input-editdiet' type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
@@ -70,19 +131,48 @@ const EditDietNutricionist = () => {
                             </div>
                             <div className='block-form label-editdiet'>
                                 <label>Refeições:</label>
-                                {diet.Meals && diet.Meals.length > 0 ? (
-                                    diet.Meals.map(meal => (
-                                        <div key={meal.id}>
-                                            <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
-                                            <div key={food.id}>
-                                                {food.name} ({food.MealFood.quantity}g)
+                                {meals.map((meal, mealIndex) => (
+                                    <div key={meal.id}>
+                                        <strong>{meal.type}</strong>
+                                        <br></br>
+                                        {/* Select para escolher o grupo de alimentos */}
+                                        <label>Grupo de Alimentos:</label>
+                                        <select className="ipt-diets" onChange={(e) => handleFoodGroupChange(mealIndex, e.target.value)}>
+                                            <option value="">Selecione um grupo</option>
+                                            {foodGroups.map((group, index) => (
+                                                <option key={index} value={group}>{group}</option>
+                                            ))}
+                                        </select>
+
+                                        {/* Select para escolher alimentos com base no grupo selecionado */}
+                                        {meal.availableFoods && (
+                                            <div>
+                                                {meal.Food.map((food, foodIndex) => (
+                                                    <div key={food.id}>
+                                                        <label>Alimento:</label>
+                                                        <select className="ipt-diets" value={food.id} onChange={(e) => handleFoodChange(mealIndex, foodIndex, e.target.value)}>
+                                                            <option value="">Selecione um alimento</option>
+                                                            {meal.availableFoods.map(availableFood => (
+                                                                <option key={availableFood.id} value={availableFood.id}>
+                                                                    {availableFood.name}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                        <label>Quantidade (g):</label>
+                                                        <input
+                                                            className="ipt-diets"
+                                                            type="text"
+                                                            value={food.MealFood.quantity || 0}
+                                                            onChange={(e) => handleQuantityChange(mealIndex, foodIndex, e.target.value)}
+                                                        />
+                                                    </div>
+                                                ))}
                                             </div>
-                                        )) : 'Nenhuma comida encontrada'}
-                                        </div>
-                                    ))
-                                ) : 'Nenhuma refeição encontrada'}
+                                        )}
+                                    </div>
+                                ))}
                             </div>
-                            <button type="button" className='editdiet-button' onClick={handleSave}>Salvar</button>
+                            <button type="submit" className='editdiet-button'>Salvar</button>
                         </form>
                     </div>
                 </div>

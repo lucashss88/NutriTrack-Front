@@ -75,7 +75,7 @@ const ListDietsForNutricionist = () => {
       // Tabela de Refeições e Alimentos
       const columns = ["Refeição", "Alimento", "Quantidade"];
       const rows = [];
-      
+
       diet.Meals.forEach((meal) => {
         meal.Food.forEach((mealFood) => {
           rows.push([meal.type, mealFood.name, `${mealFood.MealFood.quantity}g`]);
@@ -118,7 +118,7 @@ const ListDietsForNutricionist = () => {
           ],
         }],
       });
-      
+
       Packer.toBlob(doc).then((blob) => {
         saveAs(blob, "relatorio_dieta.docx");
       }).catch((error) => {
@@ -127,7 +127,7 @@ const ListDietsForNutricionist = () => {
     };
 
     const handleDownloadClick = (diet) => {
-      setSelectedDiet(diet); // Armazena a dieta selecionada
+      setSelectedDiet(diet);
       setIsModalOpen(true);
     };
 
@@ -170,20 +170,24 @@ const ListDietsForNutricionist = () => {
                 <td>{new Date(diet.startDate).toLocaleDateString()}</td>
                 <td>{new Date(diet.endDate).toLocaleDateString()}</td>
                 <td>
-                  {diet.Meals && diet.Meals.length > 0 ? (
-                    diet.Meals.map(meal => (
-                      <div key={meal.id}>
-                        <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
-                          <div key={food.id}>
-                            {food.name} ({food.MealFood.quantity}g)
-                          </div>
-                        )) : 'Nenhuma comida encontrada'}
-                      </div>
-                    ))
-                  ) : 'Nenhuma refeição encontrada'}
+                    {diet.Meals && diet.Meals.length > 0 ? (
+                        diet.Meals.map(meal => (
+
+                            <div key={meal.id}>
+                                <strong>{meal.type}</strong>:
+                                {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
+                                    <div key={food.id}>
+                                        {food.name} ({food.MealFood.quantity}g)
+                                    </div>
+                                )) : 'Nenhuma comida encontrada'}
+                            </div>
+                        ))
+                    ) : 'Nenhuma refeição encontrada'}
                 </td>
+
                 <td>
-                  {/*<button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>*/}
+                  <button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>
+                  <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
                   <button onClick={() => handleDeleteDiet(diet.id)} className="btn-listfood">Deletar</button>
                   <button onClick={() => handleDownloadClick(diet)} className="btn-listfood">Download</button>
                 </td>

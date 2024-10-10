@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MealsContext } from '../../mealsContext';
+import { toast } from 'react-toastify';
 
 const AddMealForm = () => {
     const [foodGroups, setFoodGroups] = useState([]);
-    const [meal, setMeal] = useState({ mealType: 'Café da manhã', foodGroups: [{ foodGroup: '', foods: [], food: '', quantity: '' }] });
+    const [meal, setMeal] = useState({ mealType: 'Café da manhã', foodGroups: [{ foodGroup: '', foods: [], food: '', quantity: '', substitutes: [] }] });
     const navigate = useNavigate();
     const { handleAddMeal } = useContext(MealsContext);
     const API_URL = process.env.REACT_APP_API_URL
@@ -53,13 +54,44 @@ const AddMealForm = () => {
 
     const handleFoodChange = (groupIndex, field, value) => {
         const newMeal = { ...meal };
-        newMeal.foodGroups[groupIndex][field] = value;
+
+        if (field === 'food') {
+            const selectedFood = newMeal.foodGroups[groupIndex].foods.find(food => String(food.id) === String(value));
+            newMeal.foodGroups[groupIndex].food = selectedFood || value;
+            console.log('Alimento selecionado: ', selectedFood);
+        } else if (field === 'quantity') {
+            newMeal.foodGroups[groupIndex].quantity = value;
+        }
         setMeal(newMeal);
     };
 
+
+
+
+    const handleSubstituteChange = (groupIndex, field, value) => {
+        const newMeal = { ...meal };
+
+        if(field === 'food') {
+            const selectedFood = newMeal.foodGroups[groupIndex].foods.find(food => String(food.id) === String(value));
+            const substitutes = [...newMeal.foodGroups[groupIndex].substitutes];
+            newMeal.foodGroups[groupIndex].substitutes = substitutes;
+            setMeal(newMeal);
+
+            console.log('Added Substitute:', selectedFood);
+            if (!substitutes.some(sub => sub.id === selectedFood.id)) {
+                substitutes.push({
+                    id: selectedFood.id,
+                    name: selectedFood.name,
+                });
+            }
+        }
+    };
+
+
+
     const addFoodGroup = () => {
         const newMeal = { ...meal };
-        newMeal.foodGroups.push({ foodGroup: '', foods: [], food: '', quantity: '' });
+        newMeal.foodGroups.push({ foodGroup: '', foods: [], food: '', quantity: '', substitutes: [] });
         setMeal(newMeal);
     };
 
@@ -69,9 +101,22 @@ const AddMealForm = () => {
         setMeal(newMeal);
     };
 
+    const validateForm = () => {
+        let isValid = true;
+        meal.foodGroups.forEach((group, index) => {
+            if (!group.quantity) {
+                toast.error(`Quantidade é obrigatória para o grupo de alimentos ${index + 1}`);
+                isValid = false;
+            }
+        });
+        return isValid;
+    };
+
     const addMeal = () => {
-        handleAddMeal(meal);
-        navigate(-1);
+        if (validateForm()) {
+            handleAddMeal(meal);
+            navigate(-1);
+        }
     };
 
 
@@ -118,7 +163,7 @@ const AddMealForm = () => {
                          <label>Alimento</label>
                          <select
                            className="ipt-diets"
-                           value={foodGroup.food}
+                           value={foodGroup.food.id || ''}
                            onChange={(e) => handleFoodChange(groupIndex, 'food', e.target.value)}
                          >
                            <option value="">Escolha o Alimento</option>
@@ -133,12 +178,35 @@ const AddMealForm = () => {
                            value={foodGroup.quantity}
                            onChange={(e) => handleFoodChange(groupIndex, 'quantity', e.target.value)}
                          />
+                         <label>Adicionar Substitutos</label>
+                         <select
+                           className="ipt-diets"
+                           onChange={(e) => handleSubstituteChange(groupIndex, 'food', e.target.value)}
+                         >
+                           <option value="">Escolha um Alimento Substituto</option>
+                           {foodGroup.foods.map(food => (
+                             <option key={food.id} value={food.id}>{food.name}</option>
+                           ))}
+                         </select>
+                         {foodGroup.substitutes.length > 0 && (
+                           <div>
+                             <p>Alimentos Substitutos:</p>
+                             <ul>
+                               {foodGroup.substitutes.map(sub => (
+                                 <p key={sub.id} className="text-white">
+                                   {sub.name} ({sub.quantity}g)
+                                 </p>
+                               ))}
+                             </ul>
+                           </div>
+                         )}
+
                          <button type="button" className="btn-remove" onClick={() => removeFoodGroup(groupIndex)}>Remover Alimento</button>
                        </>
                      )}
                   </div>
                 ))}
-                <button className="btn-add" type="button" onClick={addFoodGroup}>Adicionar Alimento</button>
+                <button className="btn-add" type="button" onClick={addFoodGroup}>Adicionar outro Alimento</button>
                 <button type="button" className="btn-form" onClick={addMeal}>Adicionar Refeição</button>
               </form>
             </div>

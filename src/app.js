@@ -20,6 +20,7 @@ import ViewDiet from './viewDiet';
 import EditDietNutricionist from './editDietNutricionist';
 import ListPatients from './listPatients';
 import AddMealForm from './components/diets/addMealForm';
+import Unauthorized from './unauthorized';
 import './assets/styles/diets.css';
 import './assets/styles/index.css';
 import './assets/styles/login.css';
@@ -50,6 +51,7 @@ const App = () => {
                 <ToastContainer />
                 <Routes>
                     <Route path="/" element={<MainPage />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
                     <Route path="/diet-form" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <DietForm />
@@ -114,7 +116,13 @@ const App = () => {
                             <ListFoods />
                         </ProtectedRoute>}
                     />
-                    <Route path="/home" element={<Home />} />
+
+                    <Route path="/home" element={
+                        <ProtectedRoute allowedRoles={['nutricionist', 'patient']}>
+                            <Home />
+                        </ProtectedRoute>}
+                    />
+
                 </Routes>
             </div>
         </Router>

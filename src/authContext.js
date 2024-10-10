@@ -10,30 +10,34 @@ export const AuthProvider = ({ children }) => {
     const API_URL = process.env.REACT_APP_API_URL
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetch(`${API_URL}/api/auth/me`, {
-                headers: {
-                    'x-auth-token': token,
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
+        const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await fetch(`${API_URL}/api/auth/me`, {
+                        headers: {
+                            'x-auth-token': token,
+                        },
+                    });
+                    const data = await response.json();
                     if (data.user) {
                         setUser(data.user);
                         setRole(data.user.role);
                     }
+                } catch (error) {
+                    console.error('Erro ao buscar o usuário:', error);
+                    setUser(null);
+                    setRole(null);
+                } finally {
                     setLoading(false);
-                })
-                .catch(error => {
-                    console.error('Error fetching user:', error);
-                    setLoading(false);
-                });
-        } else {
-            setLoading(false);
-        }
-    }, []);
+                }
+            } else {
+                setLoading(false);
+            }
+        };
 
+        checkAuth();
+    }, [API_URL]);
 
     const login = (userData) => {
         localStorage.setItem('token', userData.token);
@@ -41,8 +45,8 @@ export const AuthProvider = ({ children }) => {
         setRole(userData.user.role);
         setLoading(false);
 
-        console.log('User set in context:', userData.user); // Log the user set in context
-        console.log('Role set in context:', userData.user.role); // Log the role set in context
+        console.log('Usuário logado:', userData.user);
+        console.log('Role:', userData.user.role);
 
         toast.success('Usuário logado com sucesso!');
     };
