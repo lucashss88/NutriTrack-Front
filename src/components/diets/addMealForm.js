@@ -178,28 +178,28 @@ const AddMealForm = () => {
                            value={foodGroup.quantity}
                            onChange={(e) => handleFoodChange(groupIndex, 'quantity', e.target.value)}
                          />
-                         <label>Adicionar Substitutos</label>
-                         <select
-                           className="ipt-diets"
-                           onChange={(e) => handleSubstituteChange(groupIndex, 'food', e.target.value)}
-                         >
-                           <option value="">Escolha um Alimento Substituto</option>
-                           {foodGroup.foods.map(food => (
-                             <option key={food.id} value={food.id}>{food.name}</option>
-                           ))}
-                         </select>
-                         {foodGroup.substitutes.length > 0 && (
-                           <div>
-                             <p>Alimentos Substitutos:</p>
-                             <ul>
-                               {foodGroup.substitutes.map(sub => (
-                                 <p key={sub.id} className="text-white">
-                                   {sub.name} ({sub.quantity}g)
-                                 </p>
-                               ))}
-                             </ul>
-                           </div>
-                         )}
+                         {/*<label>Adicionar Substitutos</label>*/}
+                         {/*<select*/}
+                         {/*  className="ipt-diets"*/}
+                         {/*  onChange={(e) => handleSubstituteChange(groupIndex, 'food', e.target.value)}*/}
+                         {/*>*/}
+                         {/*  <option value="">Escolha um Alimento Substituto</option>*/}
+                         {/*  {foodGroup.foods.map(food => (*/}
+                         {/*    <option key={food.id} value={food.id}>{food.name}</option>*/}
+                         {/*  ))}*/}
+                         {/*</select>*/}
+                         {/*{foodGroup.substitutes.length > 0 && (*/}
+                         {/*  <div>*/}
+                         {/*    <p>Alimentos Substitutos:</p>*/}
+                         {/*    <ul>*/}
+                         {/*      {foodGroup.substitutes.map(sub => (*/}
+                         {/*        <p key={sub.id} className="text-white">*/}
+                         {/*          {sub.name} ({sub.quantity}g)*/}
+                         {/*        </p>*/}
+                         {/*      ))}*/}
+                         {/*    </ul>*/}
+                         {/*  </div>*/}
+                         {/*)}*/}
 
                          <button type="button" className="btn-remove" onClick={() => removeFoodGroup(groupIndex)}>Remover Alimento</button>
                        </>

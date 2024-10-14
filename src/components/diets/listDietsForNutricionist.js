@@ -82,7 +82,12 @@ const ListDietsForNutricionist = () => {
         });
       });
 
-      doc.autoTable(columns, rows, { startY: 20 });
+        doc.autoTable({
+            head: [columns],
+            body: rows,
+            startY: 20,
+            headStyles: { fillColor: [126, 190, 104] },
+        });
 
       doc.save('relatorio_dieta.pdf');
     };

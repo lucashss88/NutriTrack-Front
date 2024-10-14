@@ -118,6 +118,10 @@ const ListFoods = () => {
         navigate(`/food-form/${id}`);
     };
 
+    const navigateToView = (id) => {
+        navigate(`/view-food/${id}`);
+    }
+
     const filteredFoods = selectedFoodGroup
         ? foods.filter(food => food.foodGroup === selectedFoodGroup)
         : foods;
@@ -162,6 +166,7 @@ const ListFoods = () => {
                         <td>{food.foodGroup}</td>
                         <td>
                             <button onClick={() => navigateToUpdate(food.id)} className="btn-listfood">Editar</button>
+                            <button onClick={() => navigateToView(food.id)} className="btn-listfood">Visualizar</button>
                             <button onClick={() => handleDelete(food.id)} className="btn-listfood">Deletar</button>
                         </td>
                     </tr>

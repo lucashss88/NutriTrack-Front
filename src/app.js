@@ -17,6 +17,7 @@ import EditDietPatient from './editDietPatient';
 import ListDietsForNutricionist from './components/diets/listDietsForNutricionist';
 import ListDietsForPatient from './components/diets/listDietsForPatient';
 import ViewDiet from './viewDiet';
+import ViewFood from './viewFood';
 import EditDietNutricionist from './editDietNutricionist';
 import ListPatients from './listPatients';
 import AddMealForm from './components/diets/addMealForm';
@@ -72,6 +73,13 @@ const App = () => {
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <FoodForm />
                         </ProtectedRoute>}
+                    />
+
+                    <Route path="/view-food/:id" element={
+                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                            <ViewFood />
+                        </ProtectedRoute>}
+
                     />
 
                     <Route path="/listpatients" element={

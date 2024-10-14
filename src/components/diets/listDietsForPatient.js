@@ -60,7 +60,12 @@ const ListDietsForPatient = () => {
             });
         });
 
-        doc.autoTable(columns, rows, { startY: 20 });
+        doc.autoTable({
+            head: [columns],
+            body: rows,
+            startY: 20,
+            headStyles: { fillColor: [126, 190, 104] },
+        });
 
         doc.save('relatorio_dieta.pdf');
     };
@@ -169,8 +174,8 @@ const ListDietsForPatient = () => {
                             ) : 'Nenhuma refeição encontrada'}
                         </td>
                         <td>
-                            <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
                             {/*<button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>*/}
+                            <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
                             <button onClick={() => handleDownloadClick(diet)} className="btn-listfood">Download</button>
                         </td>
                     </tr>
