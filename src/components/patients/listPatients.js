@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Backbutton from './components/backbutton';
+import api from '../../services/api';
+import Backbutton from '../backbutton';
+import { calculateIMC, getIMCCategory } from './calcIMC';
 
 const ListPatients = () => {
     const [patients, setPatients] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const API_URL = process.env.REACT_APP_API_URL
 
     const loadToken = () => {
         return localStorage.getItem('token');
@@ -18,23 +18,11 @@ const ListPatients = () => {
         }
     }
 
-    const calculateIMC = (weight, height) => {
-        const imc = weight / (height * height);
-        return imc.toFixed(2);
-    };
-
-    const getIMCCategory = (imc) => {
-        if (imc < 18.5) return 'Abaixo do peso';
-        if (imc >= 18.5 && imc < 24.9) return 'Peso normal';
-        if (imc >= 25 && imc < 29.9) return 'Sobrepeso';
-        if (imc >= 30) return 'Obesidade';
-    };
-
     useEffect(() => {
         const fetchPatients = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get(`${API_URL}/api/auth/patients`, {
+                const response = await api.get('/api/auth/patients', {
                     headers: {
                         'x-auth-token': token
                     }
@@ -57,9 +45,9 @@ const ListPatients = () => {
 
 
     return (
-        <div>
+        <div className="list-diets">
             <Backbutton/>
-            <div className="list-foods">
+            <div>
                 <h1>Lista de Pacientes</h1>
                 <table>
                     <thead>

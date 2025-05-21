@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Backbutton from './components/backbutton';
+import Backbutton from '../backbutton';
+import axios from "axios";
 
 const ViewFood = () => {
     const { id } = useParams(); // ID do alimento
@@ -11,6 +11,7 @@ const ViewFood = () => {
     useEffect(() => {
         const fetchFood = async () => {
             try {
+                // eslint-disable-next-line no-template-curly-in-string
                 const response = await axios.get(`${API_URL}/api/foods/${id}`);
                 setFood(response.data);
             } catch (error) {

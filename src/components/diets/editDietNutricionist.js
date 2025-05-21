@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import BackButton from './components/backbutton';
+import BackButton from '../backbutton';
 import { toast } from 'react-toastify';
 
 const EditDietNutricionist = () => {
@@ -11,7 +11,6 @@ const EditDietNutricionist = () => {
     const [endDate, setEndDate] = useState('');
     const [meals, setMeals] = useState([]);
     const [foodGroups, setFoodGroups] = useState([]);
-    const [foods, setFoods] = useState([]);
     const API_URL = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
 
@@ -111,7 +110,7 @@ const EditDietNutricionist = () => {
     if (!diet) return <div>Carregando...</div>;
 
     return (
-        <div>
+        <div className="editdiet">
             <BackButton />
             <div className="editdiet-container">
                 <div className="subblock">

@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from './assets/images/NT2.png';
+import logo from '../assets/images/NT2.png';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from './authContext';
-import Backbutton from './components/backbutton';
-import axios from 'axios';
+import useAuth from "../hooks/useAuth";
+import Backbutton from '../components/backbutton';
+import api from '../services/api';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
-    const API_URL = process.env.REACT_APP_API_URL
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log('API_URL:', API_URL);
         try {
-            const response = await axios.post(`${API_URL}/api/auth/login`, {
+            const response = await api.post('/api/auth/login', {
                 username,
                 password,
             });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../authContext';
+import useAuth from "../../hooks/useAuth";
 import BackButton from '../backbutton';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
@@ -133,7 +133,7 @@ const ListDietsForPatient = () => {
     };
 
     return (
-        <div>
+        <div className="list-diets">
             <BackButton />
             <h1>Dietas do Paciente</h1>
             <table>

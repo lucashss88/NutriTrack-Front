@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import BackButton from './components/backbutton';
+import BackButton from '../backbutton';
+import axios from "axios";
+import api from '../../services/api';
 
 const FoodForm = () => {
     const [name, setName] = useState('');
@@ -16,21 +17,17 @@ const FoodForm = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { id } = useParams();
-    const API_URL = process.env.REACT_APP_API_URL
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const loadToken = () => {
       return localStorage.getItem('token');
-    };
-
-    const voltar = () => {
-        navigate('/listfoods');
     };
 
     useEffect(() => {
       const fetchFoodGroups = async () => {
         try {
           const token = loadToken();
-          const response = await axios.get(`${API_URL}/api/foods/food-groups`, {
+          const response = await api.get('/api/foods/food-groups', {
             headers: {
               'x-auth-token': token
             }
@@ -85,7 +82,7 @@ const FoodForm = () => {
           });
           toast.success('Alimento editado com sucesso!');
         } else {
-          await axios.post(`${API_URL}/api/foods`, foodData, {
+          await api.post('/api/foods', foodData, {
             headers: {
               'x-auth-token': token
             }
@@ -104,7 +101,7 @@ const FoodForm = () => {
     if (error) return <p>{error}</p>;
 
     return (
-      <div>
+      <div className="foodform">
         <BackButton />
         <div className="foodform-container">
             <div className="subblock">

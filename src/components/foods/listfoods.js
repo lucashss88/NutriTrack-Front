@@ -1,9 +1,9 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import BackButton from './components/backbutton';
+import BackButton from '../backbutton';
 
 const ListFoods = () => {
     const [foods, setFoods] = useState([]);
@@ -15,7 +15,6 @@ const ListFoods = () => {
     const [noFoodsMessage, setNoFoodsMessage] = useState('');
     const itemsPerPage = 20;
     const navigate = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL
 
     const loadToken = () => {
         return localStorage.getItem('token');
@@ -26,7 +25,7 @@ const ListFoods = () => {
         const fetchFoodGroups = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get(`${API_URL}/api/foods/food-groups`, {
+                const response = await api.get('/api/foods/food-groups', {
                     headers: {
                         'x-auth-token': token
                     }
@@ -45,7 +44,7 @@ const ListFoods = () => {
         const fetchFoods = async () => {
             try {
                 const token = loadToken();
-                const response = await axios.get(`${API_URL}/api/foods`, {
+                const response = await api.get('/api/foods', {
                     headers: {
                         'x-auth-token': token
                     },
@@ -99,7 +98,8 @@ const ListFoods = () => {
         if (window.confirm('Are you sure you want to delete this food?')) {
             try {
                 const token = loadToken();
-                await axios.delete(`${API_URL}/api/foods/${id}`, {
+                // eslint-disable-next-line no-template-curly-in-string
+                await api.delete('/api/foods/${id}', {
                     headers: {
                         'x-auth-token': token
                     }

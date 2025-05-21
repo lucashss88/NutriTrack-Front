@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Backbutton from './components/backbutton';
-import { MealsContext } from './mealsContext';
+import Backbutton from '../backbutton';
+import { MealsContext } from '../../context/mealsContext';
 
 const DietForm = () => {
   const [patients, setPatients] = useState([]);
@@ -12,7 +12,6 @@ const DietForm = () => {
   const [endDate, setEndDate] = useState('');
   const { meals, setMeals } = useContext(MealsContext);
   const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL
 
   const loadToken = () => {
     return localStorage.getItem('token');
@@ -29,7 +28,7 @@ const DietForm = () => {
     const fetchPatients = async () => {
       try {
         const token = loadToken();
-        const response = await axios.get(`${API_URL}/api/auth/patients`, {
+        const response = await api.get('/api/auth/patients', {
           headers: {
             'x-auth-token': token
           }
@@ -67,14 +66,23 @@ const DietForm = () => {
       patientId: selectedPatient,
       meals: meals.map(meal => ({
         type: meal.mealType,
+        observation: meal.observation || '',
         foodGroups: meal.foodGroups.map(group => ({
           foodIds: group.food ? [group.food.id] : [],
           quantities: group.food ? [group.quantity] : [],
-          substitutes: group.substitutes.map(sub => ({
-            id: sub.id,
-            name: sub.name,
-          })),
-        }))
+        })),
+        substitutes: meal.substitutes?.map(substitute => ({
+          type: substitute.mealType,
+          observation: substitute.observation || '',
+          foodGroups: substitute.foodGroups.map(group => ({
+            foodIds: group.food ? [group.food.id] : [],
+            quantities: group.food ? [group.quantity] : [],
+            substitutes: group.substitutes.map(sub => ({
+              id: sub.id,
+              name: sub.name,
+            })),
+          }))
+        })) || []
       }))
     };
 
@@ -83,15 +91,16 @@ const DietForm = () => {
 
     try {
       const token = loadToken();
-      const response = await axios.post(`${API_URL}/api/diets`, dietData, {
+      const response = await api.post('/api/diets', dietData, {
         headers: {
           'x-auth-token': token,
           'Content-Type': 'application/json'
         }
       });
       toast.success('Dieta criada com sucesso!');
-      setMeals([]);
+      setMeals([]); // Limpar as refeições após criação da dieta
       localStorage.removeItem('dietFormData');
+      console.log(response.data);
       navigate('/home');
     } catch (error) {
       console.error('Error creating diet:', error);
@@ -99,10 +108,11 @@ const DietForm = () => {
     }
   };
 
+
   return (
-      <div>
+      <div className="dietform">
         <Backbutton/>
-        <div className="App">
+        <div className="dietform-container">
           <div className="subblock">
             <div className="title">
               <h1>Criar Dieta</h1>
@@ -157,6 +167,7 @@ const DietForm = () => {
                         {/*      </div>*/}
                         {/*  );*/}
                         {/*})}*/}
+
                       </div>
                       <button type="button" onClick={() => removeMeal(index)} className="btn-remove">
                         Remover Refeição

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import BackButton from './components/backbutton';
+import BackButton from '../backbutton';
 
 const ViewDiet = () => {
     const { id } = useParams();
@@ -29,7 +29,7 @@ const ViewDiet = () => {
     if (!diet) return <div>Loading...</div>;
 
     return (
-        <div>
+        <div className="viewdiet">
             <BackButton />
             <div className="viewdiet-container">
                 <div className="subblock">
@@ -52,6 +52,7 @@ const ViewDiet = () => {
                                 </div>
                             ))
                         ) : 'Nenhuma refeição encontrada'}
+                        <p>Observações: {diet.observation}</p>
                     </div>
                 </div>
             </div>

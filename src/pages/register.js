@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useNavigate } from 'react-router-dom';
-import logo from './assets/images/NT2.png';
+import logo from '../assets/images/NT2.png';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Backbutton from './components/backbutton';
+import Backbutton from '../components/backbutton';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -18,13 +18,12 @@ const Register = () => {
     const [nutricionists, setNutricionists] = useState([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL
 
     
     useEffect(() => {
         const fetchNutricionists = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/auth/nutricionists`);
+                const response = await api.get('/api/auth/nutricionists');
                 setNutricionists(response.data);
             } catch (err) {
                 console.error('Error fetching nutricionists:', err);
@@ -37,7 +36,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3001/api/auth/register', {
+            await api.post('/api/auth/register', {
                 username,
                 password,
                 role,

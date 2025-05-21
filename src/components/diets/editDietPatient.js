@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
-import BackButton from './components/backbutton';
+import BackButton from '../backbutton';
 
 const EditDietPatient = () => {
   const { id: patientId } = useParams(); // Obtém o ID do paciente a partir dos parâmetros da URL
   const [diet, setDiet] = useState(null);
   const [meals, setMeals] = useState([]);
   const [foodGroups, setFoodGroups] = useState([]);
-  const [foods, setFoods] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
 
@@ -105,7 +104,7 @@ const EditDietPatient = () => {
   if (!diet) return <div>Carregando...</div>;
 
   return (
-      <div>
+      <div className="editdiet">
         <BackButton />
         <div className="editdiet-container">
           <div className="subblock">
