@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Backbutton from '../backbutton';
 import { MealsContext } from '../../context/mealsContext';
 
 const DietForm = () => {
@@ -110,77 +109,77 @@ const DietForm = () => {
 
 
   return (
-      <div className="dietform">
-        <Backbutton/>
-        <div className="dietform-container">
-          <div className="subblock">
-            <div className="title">
-              <h1>Criar Dieta</h1>
-            </div>
-            <div className="dietform">
+      <div className="d-flex flex-column justify-content-center align-items-center py-1 py-md-3 px-2 px-md-3">
+        <div className="edit-diet-container shadow-lg p-md-3 pt-md-4 p-1 mt-1 mt-md-5">
+          <div>
+            <h1 className="fs-2">Criar Dieta</h1>
+            <div className="fs-4 px-4 pb-4">
               <form onSubmit={createDiet}>
-                <div className='block-form label-diets'>
+                <div className='fs-5'>
                   <label>Data de início</label>
-                  <input className="ipt-diets" type="date" name="startDate" required />
+                  <div className="input-group">
+                    <input className="input-group-text form-control" type="date" name="startDate" required />
+                  </div>
                 </div>
-                <div className='block-form label-diets'>
+                <div className='fs-5'>
                   <label>Data final</label>
-                  <input className="ipt-diets" type="date" name="endDate" required />
+                  <div className="input-group">
+                    <input className="input-group-text form-control" type="date" name="endDate" required />
+                  </div>
                 </div>
-                <div className='block-form label-diets'>
+                <div className='fs-5'>
                   <label>Paciente</label>
-                  <select
-                      className="ipt-diets"
-                      value={selectedPatient}
-                      onChange={(e) => setSelectedPatient(e.target.value)}
-                      required
-                  >
-                    <option value="">Escolha o paciente</option>
-                    {patients.map((patient) => (
-                        <option key={patient.id} value={patient.id}>
-                          {patient.username}
-                        </option>
-                    ))}
-                  </select>
+                  <div className="input-group">
+                    <select
+                        className="input-group-text form-control text-start"
+                        value={selectedPatient}
+                        onChange={(e) => setSelectedPatient(e.target.value)}
+                        required
+                    >
+                      <option value="">Escolha o paciente</option>
+                      {patients.map((patient) => (
+                          <option key={patient.id} value={patient.id}>
+                            {patient.username}
+                          </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 {meals.map((meal, index) => (
-                    <div key={index} className=''>
-                      <div className="divMeal">
+                    <div key={index} className='fs-5 meal-card p-0 mt-4 mb-4 shadow-sm'>
+                      <div className="meal-card-header">
                         <p><strong>Refeição: {meal.mealType}</strong></p>
-
-                        {/*{meal.foodGroups.map((foodGroup, fgIndex) => {*/}
-                        {/*  const selectedFood = foodGroup.food;*/}
-                        {/*  return (*/}
-                        {/*      <div key={fgIndex}>*/}
-                        {/*        <p>{selectedFood?.name ? selectedFood.name : 'Alimento não encontrado'} - {foodGroup.quantity}g</p>*/}
-                        {/*        {foodGroup.substitutes.length > 0 && (*/}
-                        {/*            <div>*/}
-                        {/*              <strong>Substitutos:</strong>*/}
-                        {/*              <ul>*/}
-                        {/*                {foodGroup.substitutes.map(sub => (*/}
-                        {/*                    <p key={sub.id}>{sub.name} ({sub.quantity}g)</p>*/}
-                        {/*                ))}*/}
-                        {/*              </ul>*/}
-                        {/*            </div>*/}
-                        {/*        )}*/}
-                        {/*      </div>*/}
-                        {/*  );*/}
-                        {/*})}*/}
-
+                        <button
+                            type="button"
+                            onClick={() => removeMeal(index)}
+                            className="btn btn-danger btn-sm btn-remove-meal"
+                        >
+                          Remover
+                        </button>
                       </div>
-                      <button type="button" onClick={() => removeMeal(index)} className="btn-remove">
-                        Remover Refeição
-                      </button>
+                      <div className="meal-card-body">
+                        {/*{meal.observation && (*/}
+                        {/*    <p className="mb-2"><strong>Observação:</strong> {meal.observation}</p>*/}
+                        {/*)}*/}
+                        {/*<h6 className="mt-3 mb-2 text-nutritrack-green">Alimentos:</h6>*/}
+                        {/*{meal.foodGroups.length > 0 ? (*/}
+                        {/*    meal.foodGroups.map((foodGroup, fgIndex) => (*/}
+                        {/*        <div key={fgIndex} className="meal-item">*/}
+                        {/*          <span>{foodGroup.food?.name || 'Alimento não encontrado'}</span>*/}
+                        {/*          <span className="fw-bold">{foodGroup.quantity}g</span>*/}
+                        {/*        </div>*/}
+                        {/*    ))*/}
+                        {/*) : (*/}
+                        {/*    <p className="text-muted">Nenhum alimento adicionado.</p>*/}
+                        {/*)}*/}
+                      </div>
                     </div>
                 ))}
 
+                <button type="button" onClick={goToAddMeal} className="mt-4 btn btn-lg btn-light w-100 rounded-2 mb-2">Adicionar Refeição</button>
 
-
-
-                <button type="button" onClick={goToAddMeal} className="btn-form">Adicionar Refeição</button>
-
-                <button type="submit" className="btn-form">Criar Dieta</button>
+                <button type="submit" className="mt-4 btn btn-lg btn-light rounded-2 w-100 mb-2">Criar Dieta</button>
               </form>
             </div>
           </div>

@@ -14,7 +14,12 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
         return <Navigate to="/" replace />;
     }
 
+    if (user && allowedRoles.includes(role)) {
+        console.log("Rota autorizada.");
+    }
+
     return children;
+    // return <Navigate to="/unauthorized" replace />;
 };
 
 export default ProtectedRoute;

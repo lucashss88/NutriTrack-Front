@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import api from '../services/api';
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/NT2.png';
-import { toast } from 'react-toastify';
+import {useNavigate} from 'react-router-dom';
+import logo from '../assets/images/NTBW.png';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Backbutton from '../components/backbutton';
 
@@ -19,7 +19,7 @@ const Register = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    
+
     useEffect(() => {
         const fetchNutricionists = async () => {
             try {
@@ -65,102 +65,130 @@ const Register = () => {
     return (
         <div>
             <Backbutton/>
-            <div className="logo-register">
-                <img src={logo} className='logo'/>
-                <p>Registre-se no NutriTrack</p>
-            </div>
-            <div className="register-container">
-                {error && <p className="error">{error}</p>}
-                <div className='register'>
-                    <form onSubmit={handleSubmit}>
-                        <div className='block-form label-register'>
-                            <label>Usuário</label>
-                            <input
-                                className='input-register'
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className='block-form label-register'>
-                            <label>Senha</label>
-                            <input
-                                className='input-register'
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className='block-form label-register'>
-                            <label>Nome</label>
-                            <input
-                                className='input-register'
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className='block-form label-register'>
-                            <label>Tipo de Usuário</label>
-                            <select value={role} onChange={(e) => setRole(e.target.value)} className='input-register'>
-                                <option value="patient">Paciente</option>
-                                <option value="nutricionist">Nutricionista</option>
-                            </select>
-                        </div>
-                        {role === 'patient' && (
-                            <>
-                                <div className='block-form label-register'>
-                                    <label>Nutricionista</label>
-                                    <select
-                                        value={nutricionistId}
-                                        onChange={(e) => setNutricionistId(e.target.value)}
-                                        className='input-register'
+            <div
+                className="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                <div className='App shadow-lg p-md-3 pt-md-4 p-1'>
+                    <div className="mb-2 text-center d-block">
+                        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                        <img src={logo} className='logo'/>
+                    </div>
+                    <div>
+                        {error && <p className="error">{error}</p>}
+                        <div className='register'>
+                            <form onSubmit={handleSubmit}>
+                                <div className='fs-6'>
+                                    <label>Usuário</label>
+                                    <div className="input-group">
+                                        <input
+                                            className='input-group-text form-control text-start'
+                                            type="text"
+                                            value={username}
+                                            placeholder="Usuário"
+                                            onChange={(e) => setUsername(e.target.value)}
+                                            required
+                                            autoFocus
+                                        />
+                                    </div>
+                                </div>
+                                <div className='fs-6'>
+                                    <label>Senha</label>
+                                    <div className="input-group">
+                                        <input
+                                            className='input-group-text form-control text-start'
+                                            type="password"
+                                            value={password}
+                                            placeholder="Senha"
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className='fs-6'>
+                                    <label>Nome</label>
+                                    <div className="input-group">
+                                        <input
+                                            className='input-group-text form-control text-start'
+                                            type="text"
+                                            value={name}
+                                            placeholder="Nome"
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className='fs-6'>
+                                    <label>Tipo de Usuário</label>
+                                    <select value={role} onChange={(e) => setRole(e.target.value)}
+                                            className='input-group form-control'
+                                            required
                                     >
-                                        <option value="">Selecione um nutricionista</option>
-                                        {nutricionists.map(nutricionist => (
-                                            <option key={nutricionist.id} value={nutricionist.id}>
-                                                {nutricionist.username}
-                                            </option>
-                                        ))}
+                                        <option value="patient">Paciente</option>
+                                        <option value="nutricionist">Nutricionista</option>
                                     </select>
                                 </div>
-                                <div className='block-form label-register'>
-                                    <label>Peso (kg)</label>
-                                    <input
-                                        className='input-register'
-                                        type="number"
-                                        value={weight}
-                                        onChange={(e) => setWeight(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className='block-form label-register'>
-                                    <label>Altura (m)</label>
-                                    <input
-                                        className='input-register'
-                                        type="number"
-                                        value={height}
-                                        onChange={(e) => setHeight(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className='block-form label-register'>
-                                    <label>Idade</label>
-                                    <input
-                                        className='input-register'
-                                        type="number"
-                                        value={age}
-                                        onChange={(e) => setAge(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                            </>
-                        )}
-                        <button type="submit" className='register-button'>Registrar</button>
-                    </form>
+                                {role === 'patient' && (
+                                    <>
+                                        <div className='fs-6'>
+                                            <label>Nutricionista</label>
+                                            <select
+                                                value={nutricionistId}
+                                                onChange={(e) => setNutricionistId(e.target.value)}
+                                                className='form-control input-group'
+                                                required
+                                            >
+                                                <option value="">Selecione um nutricionista</option>
+                                                {nutricionists.map(nutricionist => (
+                                                    <option key={nutricionist.id} value={nutricionist.id}>
+                                                        {nutricionist.username}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className='fs-6'>
+                                            <label>Peso (kg)</label>
+                                            <div className="input-group">
+                                                <input
+                                                    className='input-group-text form-control text-start'
+                                                    type="text"
+                                                    value={weight}
+                                                    placeholder="Peso"
+                                                    onChange={(e) => setWeight(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className='fs-6'>
+                                            <label>Altura (m)</label>
+                                            <div className="input-group">
+                                                <input
+                                                    className='input-group-text form-control text-start'
+                                                    type="text"
+                                                    value={height}
+                                                    placeholder="Altura"
+                                                    onChange={(e) => setHeight(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className='fs-6'>
+                                            <label>Idade</label>
+                                            <div className="input-group">
+                                                <input
+                                                    className='input-group-text form-control text-start'
+                                                    type="text"
+                                                    value={age}
+                                                    placeholder="Idade"
+                                                    onChange={(e) => setAge(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                <button type="submit" className="mt-4 btn btn-light rounded-2 mb-2">Registrar</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

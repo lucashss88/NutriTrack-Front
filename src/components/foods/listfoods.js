@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import BackButton from '../backbutton';
 
 const ListFoods = () => {
     const [foods, setFoods] = useState([]);
@@ -127,13 +126,12 @@ const ListFoods = () => {
         : foods;
 
     return (
-        <div className="list-foods">
-            <BackButton />
-            <h1>Lista de Alimentos</h1>
+        <div className="p-3 fs-6 d-flex flex-column">
+            <h1 className="fs-2">Lista de Alimentos</h1>
             <div>
                 <label>Escolha o Grupo de Alimento: </label>
                 <select
-                    className="input-register"
+                    className="input-group form-control"
                     value={selectedFoodGroup}
                     onChange={handleSelectFoodGroup}
                 >
@@ -165,21 +163,21 @@ const ListFoods = () => {
                         <td>{food.calories}</td>
                         <td>{food.foodGroup}</td>
                         <td>
-                            <button onClick={() => navigateToUpdate(food.id)} className="btn-listfood">Editar</button>
-                            <button onClick={() => navigateToView(food.id)} className="btn-listfood">Visualizar</button>
-                            <button onClick={() => handleDelete(food.id)} className="btn-listfood">Deletar</button>
+                            <button onClick={() => navigateToUpdate(food.id)} className="btn-nutritrack mx-1">Editar</button>
+                            <button onClick={() => navigateToView(food.id)} className="btn-nutritrack mx-1">Visualizar</button>
+                            <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar</button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
             <div className="pagination">
-                <button className="btn-listfood" onClick={handlePreviousPage} disabled={currentPage === 1}>
-                    Previous
+                <button className="navbar-link border-0 me-1" onClick={handlePreviousPage} disabled={currentPage === 1}>
+                    Anterior
                 </button>
                 <span>Page {currentPage} of {totalPages}</span>
-                <button className="btn-listfood" onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Next
+                <button className="navbar-link border-0 ms-1" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    Próximo
                 </button>
             </div>
         </div>

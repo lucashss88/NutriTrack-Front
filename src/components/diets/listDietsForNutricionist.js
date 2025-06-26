@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import BackButton from '../backbutton';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'jspdf-autotable';
 import DownloadModal from '../downloadModal';
 import {generatePDF, generateDOCX} from './downloadDiets';
 
@@ -89,9 +87,8 @@ const ListDietsForNutricionist = () => {
     };
 
     return (
-      <div className="list-diets">
-        <BackButton />
-        <h1>Dietas dos Pacientes</h1>
+      <div className="p-3 fs-6">
+        <h1 className="fs-2">Dietas dos Pacientes</h1>
         <table>
           <thead>
             <tr>
@@ -125,10 +122,11 @@ const ListDietsForNutricionist = () => {
                 </td>
 
                 <td>
-                  <button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>
-                  <button onClick={() => handleViewDiet(diet.id)} className="btn-listfood">Visualizar</button>
-                  <button onClick={() => handleDeleteDiet(diet.id)} className="btn-listfood">Deletar</button>
-                  <button onClick={() => handleDownloadClick(diet)} className="btn-listfood">Download</button>
+                  <button onClick={() => handleEditDiet(diet.id)} className="btn-nutritrack mx-1">Editar</button>
+                  <button onClick={() => handleViewDiet(diet.id)} className="btn-nutritrack mx-1">Visualizar</button>
+                  <button onClick={() => handleDownloadClick(diet)} className="btn-nutritrack mx-1">Download</button>
+                    <button onClick={() => handleDeleteDiet(diet.id)} className="btn btn-danger mx-1">Deletar</button>
+
                 </td>
               </tr>
             ))}

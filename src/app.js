@@ -29,6 +29,9 @@ import './assets/styles/home.css';
 import './assets/styles/formFood.css';
 import './assets/styles/viewDiet.css';
 import './assets/styles/editDiet.css';
+import './assets/styles/downloadModal.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from "./pages/layout";
 
 const App = () => {

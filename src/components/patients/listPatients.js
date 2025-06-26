@@ -45,10 +45,9 @@ const ListPatients = () => {
 
 
     return (
-        <div className="list-diets">
-            <Backbutton/>
+        <div className="p-3 fs-6">
             <div>
-                <h1>Lista de Pacientes</h1>
+                <h1 className="fs-2">Lista de Pacientes</h1>
                 <table>
                     <thead>
                     <tr>

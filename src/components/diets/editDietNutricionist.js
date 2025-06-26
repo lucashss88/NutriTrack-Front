@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import BackButton from '../backbutton';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 const EditDietNutricionist = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [diet, setDiet] = useState(null);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -110,75 +110,95 @@ const EditDietNutricionist = () => {
     if (!diet) return <div>Carregando...</div>;
 
     return (
-        <div className="editdiet">
-            <BackButton />
-            <div className="editdiet-container">
-                <div className="subblock">
-                    <div className="title">
-                        <h1>Editar Dieta</h1>
-                    </div>
-                    <div className="editdiet">
-                        <form onSubmit={handleSaveDiet}>
-                            <div className='block-form label-editdiet'>
-                                <label>Data de Início:</label>
-                                <input className='input-editdiet ipt-diets' type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                            </div>
-                            <div className='block-form label-editdiet'>
-                                <label>Data Final:</label>
-                                <input className='input-editdiet ipt-diets' type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                            </div>
-                            <div className='block-form label-editdiet'>
-                                <label>Refeições:</label>
-                                {meals.map((meal, mealIndex) => (
-                                    <div key={meal.id}>
-                                        <strong>{meal.type}</strong>
-                                        <br></br>
-
-                                        {meal.Food.map((food, foodIndex) => (
-                                            <div key={food.id}>
-                                                <p>Caso deseje trocar, selecione um grupo de alimento.</p>
-                                                <span>Alimento atual: <b>{food.name}</b></span>
-                                                <select className="ipt-diets" onChange={(e) => handleFoodGroupChange(mealIndex, foodIndex, e.target.value)}>
-                                                    <option value="">Selecione um grupo de alimento</option>
-                                                    {foodGroups.map((group, index) => (
-                                                        <option key={index} value={group}>{group}</option>
-                                                    ))}
-                                                </select>
-                                                {/*<h4>obs: se não quiser trocar o alimento, não faça nada.</h4>*/}
-                                                {/* Select para escolher alimentos com base no grupo selecionado */}
-                                                {food.availableFoods && (
-                                                    <div>
-                                                        <label>Novo alimento:</label>
-                                                        <select className="ipt-diets" value={food.id} onChange={(e) => handleFoodChange(mealIndex, foodIndex, e.target.value)}>
-                                                            <option value="">Selecione um alimento</option>
-                                                            {food.availableFoods.map(availableFood => (
-                                                                <option key={availableFood.id} value={availableFood.id}>
-                                                                    {availableFood.name}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                )}
-
-                                                <label>Quantidade:</label>
-                                                <input
-                                                    className="ipt-diets"
-                                                    type="text"
-                                                    value={food.MealFood.quantity || 0}
-                                                    onChange={(e) => handleQuantityChange(mealIndex, foodIndex, e.target.value)}
-                                                />
-                                            </div>
-                                        ))}
+        <>
+            <BackButton/>
+            <div className="d-flex flex-column justify-content-center align-items-center py-1 py-md-3 px-2 px-md-3">
+                <div className="edit-diet-container shadow-lg p-md-3 pt-md-4 p-1 mt-1 mt-md-5">
+                    <div>
+                        <h1 className="fs-2 ">Editar Dieta</h1>
+                        <div className="fs-4 px-4 pb-4">
+                            <form onSubmit={handleSaveDiet}>
+                                <div className='fs-5'>
+                                    <label>Data de Início:</label>
+                                    <div className='input-group'>
+                                        <input className='input-group-text form-control' type="date" value={startDate}
+                                               onChange={(e) => setStartDate(e.target.value)}
+                                               required
+                                        />
                                     </div>
-                                ))}
-                            </div>
-                            <button type="submit" className='editdiet-button'>Salvar</button>
-                        </form>
+                                </div>
+                                <div className='fs-5'>
+                                    <label>Data Final:</label>
+                                    <div className='input-group'>
+                                        <input className='input-group-text form-control' type="date" value={endDate}
+                                               onChange={(e) => setEndDate(e.target.value)}/>
+                                    </div>
+                                </div>
+                                <div className='fs-5'>
+                                    <label className="fs-4 mb-4">Refeições da dieta:</label>
+                                    {meals.map((meal, mealIndex) => (
+                                        <div key={meal.id} className="meal-edit-card shadow-sm">
+                                            <h4 className="meal-edit-card-title text-center">{meal.type}</h4>
+                                            <br></br>
+
+                                            {meal.Food.map((food, foodIndex) => (
+                                                <div key={food.id} className="food-item-edit">
+                                                    <p className="mb-2"><strong>Alimento atual:</strong> {food.name}</p>
+                                                    <span className="text-small-hint">
+                                                        Para trocar este alimento, primeiro selecione um novo grupo.
+                                                    </span>
+                                                    <select className="input-group-text form-control text-start"
+                                                            onChange={(e) => handleFoodGroupChange(mealIndex, foodIndex, e.target.value)}>
+                                                        <option value="">Selecione um novo grupo</option>
+                                                        {foodGroups.map((group, index) => (
+                                                            <option key={index} value={group}>{group}</option>
+                                                        ))}
+                                                    </select>
+                                                    {/*<h4>obs: se não quiser trocar o alimento, não faça nada.</h4>*/}
+                                                    {/* Select para escolher alimentos com base no grupo selecionado */}
+                                                    {food.availableFoods && (
+                                                        <div className="fs-5">
+                                                            <label>Novo alimento:</label>
+                                                            <div className="input-group">
+                                                                <select
+                                                                    className="input-group-text form-control text-start"
+                                                                    value={food.id}
+                                                                    onChange={(e) => handleFoodChange(mealIndex, foodIndex, e.target.value)}
+                                                                >
+                                                                    <option value="">Selecione um alimento</option>
+                                                                    {food.availableFoods.map(availableFood => (
+                                                                        <option key={availableFood.id}
+                                                                                value={availableFood.id}>
+                                                                            {availableFood.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    <label>Quantidade:</label>
+                                                    <div className="input-group">
+                                                        <input
+                                                            className="input-group-text form-control"
+                                                            type="text"
+                                                            value={food.MealFood.quantity || 0}
+                                                            onChange={(e) => handleQuantityChange(mealIndex, foodIndex, e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                                <button type="submit"
+                                        className='mt-4 btn btn-lg btn-light w-100 rounded-2 mb-2'>Salvar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        </>
     );
 };
 
