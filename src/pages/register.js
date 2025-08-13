@@ -67,7 +67,7 @@ const Register = () => {
             <Backbutton/>
             <div
                 className="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
-                <div className='App shadow-lg p-md-3 pt-md-4 p-1'>
+                <div className='App shadow-lg p-md-3 pt-md-4 p-1 py-4'>
                     <div className="mb-2 text-center d-block">
                         {/* eslint-disable-next-line jsx-a11y/alt-text */}
                         <img src={logo} className='logo'/>

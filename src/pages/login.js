@@ -33,6 +33,8 @@ const Login = () => {
         } catch (error) {
             console.error('Error logging in:', error.response ? error.response.data : error);
             toast.error('Erro no Login. Tente novamente!');
+            setUsername('');
+            setPassword('');
         }
     };
 
@@ -40,7 +42,7 @@ const Login = () => {
         <>
             <Backbutton/>
             <div className="w-100 h-auto d-flex flex-column justify-content-center align-items-center">
-                <div className='App shadow-lg p-md-5'>
+                <div className='App shadow-lg p-md-5 py-4'>
                     <div className="mb-2 text-center d-block">
                         <img src={logo} className='logo' alt='Logo'/>
                     </div>
@@ -124,4 +126,3 @@ const Login = () => {
 };
 
 export default Login;
-

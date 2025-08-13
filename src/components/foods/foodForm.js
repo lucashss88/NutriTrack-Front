@@ -66,7 +66,7 @@ const FoodForm = () => {
             };
             fetchFood();
         }
-    }, [id]);
+    }, [API_URL, id]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

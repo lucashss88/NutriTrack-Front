@@ -63,6 +63,10 @@
 
 /* Regras de mídia para telas pequenas */
 @media (max-width: 768px) {
+    .App {
+        width: 60%;
+    }
+
     .App-login {
         width: 80%; /* Ajuste para tablets */
         margin: 0 auto;
@@ -99,5 +103,9 @@
 
     .login {
         font-size: 14px;
+    }
+
+    .App {
+        width: 80%;
     }
 }

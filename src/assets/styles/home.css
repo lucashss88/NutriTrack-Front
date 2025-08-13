@@ -7,7 +7,7 @@
 
 .card-feature:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0.75rem 1.5rem rgba(126, 190, 104, 0.2); /* Sombra mais pronunciada e verde */
+    box-shadow: 0 0.75rem 1.5rem rgba(126, 190, 104, 0.2);
     cursor: pointer;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .badge-soon {
-    background-color: #ffc107; /* Cor de destaque para "Em Breve" */
+    background-color: #ffc107;
     color: #343a40;
     font-size: 0.75em;
     padding: 0.3em 0.6em;
@@ -137,7 +137,6 @@
     font-size: 10px;
 }
 
-/* Regras de mídia para tablets */
 @media (max-width: 768px) {
     .button-main {
         padding: 20px;
@@ -154,7 +153,6 @@
     }
 }
 
-/* Regras de mídia para smartphones */
 @media (max-width: 480px) {
     .button-main {
         padding: 15px;
@@ -167,38 +165,36 @@
     }
 
     .main-container {
-        padding-top: 5%;
+        padding-top: 50%;
     }
 }
 
-/* Responsividade para tablets */
 @media (max-width: 768px) {
     .button-home {
-        width: 90%; /* Largura total em telas menores */
-        font-size: 14px; /* Tamanho de fonte menor */
+        width: 90%;
+        font-size: 14px;
     }
 
     .logo-home {
-        width: 100px; /* Logo menor em telas menores */
+        width: 100px;
     }
 
     .text-home {
-        padding: 0 5%; /* Menos padding lateral */
+        padding: 0 5%;
     }
 }
 
-/* Responsividade para smartphones */
 @media (max-width: 480px) {
     .button-home {
-        width: 95%; /* Largura total em smartphones */
-        font-size: 12px; /* Tamanho de fonte ainda menor */
+        width: 95%;
+        font-size: 12px;
     }
 
     .logo-home {
-        width: 80px; /* Logo ainda menor */
+        width: 80px;
     }
 
     .text-home {
-        padding: 0 2%; /* Padding lateral reduzido */
+        padding: 0 2%;
     }
 }

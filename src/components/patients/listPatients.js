@@ -14,7 +14,7 @@ const ListPatients = () => {
 
     const noPatients = () => {
         if (patients.length === 0) {
-            return <p>Nenhum paciente encontrado.</p>;
+            return <tr>Nenhum paciente encontrado.</tr>;
         }
     }
 
@@ -28,7 +28,6 @@ const ListPatients = () => {
                     }
                 });
                 setPatients(response.data);
-                console.log(patients)
             } catch (error) {
                 console.error('Error fetching patients:', error);
                 setError('Error fetching patients');

@@ -142,7 +142,7 @@ const AddMealForm = () => {
                     isValid = false;
                 }
             }
-            if (group.foodGroup && (!group.quantity || isNaN(Number(group.quantity)) || Number(group.quantity) <= 0)) {
+            if (group.foodGroup && (!group.quantity) && group.quantity !== '') {
                 toast.error(`Quantidade válida é obrigatória para o grupo de alimentos "${group.foodGroup}"`);
                 isValid = false;
             }

@@ -73,7 +73,7 @@ const ViewDiet = () => {
                                         {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
                                             <div key={food.id} className="food-display-item">
                                                 <span>{food.name}</span>
-                                                <span className="fw-bold">{food.MealFood?.quantity || 0}g</span>
+                                                <span className="fw-bold">{food.MealFood?.quantity || 0}</span>
                                             </div>
                                         )) : <p className="text-muted">Nenhum alimento especificado para esta refeição.</p>}
                                     </div>

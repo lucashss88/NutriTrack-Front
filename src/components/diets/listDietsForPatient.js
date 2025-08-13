@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
 import BackButton from '../backbutton';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { Document, Packer, Paragraph, Table, TableRow, TableCell, WidthType, HeadingLevel } from "docx";
-import { saveAs } from "file-saver";
+import {Document, Packer, Paragraph, Table, TableRow, TableCell, WidthType, HeadingLevel} from "docx";
+import {saveAs} from "file-saver";
 import DownloadModal from '../downloadModal';
 import {generateDOCX, generatePDF} from "./downloadDiets";
 
 const ListDietsForPatient = () => {
     const [diets, setDiets] = useState([]);
-    const { user } = useAuth();
+    const {user} = useAuth();
     const patientId = user.id;
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,10 +71,10 @@ const ListDietsForPatient = () => {
             <table>
                 <thead>
                 <tr>
-                    <th>Data de Início</th>
-                    <th>Data Final</th>
-                    <th>Refeições</th>
-                    <th>Ações</th>
+                    <th scope="col">Data de Início</th>
+                    <th scope="col">Data Final</th>
+                    <th scope="col">Refeições</th>
+                    <th scope="col" className="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,31 +84,27 @@ const ListDietsForPatient = () => {
                         <td>{new Date(diet.endDate).toLocaleDateString()}</td>
                         <td>
                             {diet.Meals && diet.Meals.length > 0 ? (
-                                diet.Meals.map(meal => (
-                                    <div key={meal.id}>
-                                        <strong>{meal.type}</strong>: {meal.Food && meal.Food.length > 0 ? meal.Food.map(food => (
-                                        <div key={food.id}>
-                                            {food.name} ({food.MealFood.quantity}g)
-                                            {food.MealFood.substitutes && food.MealFood.substitutes.length > 0 && (
-                                                <div>
-                                                    <strong>Substitutos:</strong>
-                                                    <ul>
-                                                        {food.MealFood.substitutes.map(sub => (
-                                                            <li key={sub.id}>{sub.name} ({sub.quantity}g)</li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )) : 'Nenhuma comida encontrada'}
-                                    </div>
-                                ))
-                            ) : 'Nenhuma refeição encontrada'}
+                                <ul className="meal-summary-list">
+                                    {diet.Meals.map(meal => (
+                                        <li key={meal.id}>
+                                            <strong>{meal.type}</strong>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <span className="text-muted small">Nenhuma refeição configurada.</span>
+                            )}
                         </td>
-                        <td>
-                            {/*<button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>*/}
-                            <button onClick={() => handleViewDiet(diet.id)} className="btn-nutritrack mx-1">Visualizar</button>
-                            <button onClick={() => handleDownloadClick(diet)} className="btn-nutritrack mx-1">Download</button>
+                        <td className="text-center">
+                            <div className="d-md-flex justify-content-center align-items-center">
+                                {/*<button onClick={() => handleEditDiet(diet.id)} className="btn-listfood">Editar</button>*/}
+                                <button onClick={() => handleViewDiet(diet.id)}
+                                        className="btn-nutritrack mx-1">Visualizar
+                                </button>
+                                <button onClick={() => handleDownloadClick(diet)}
+                                        className="btn-nutritrack mx-1">Download
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 ))}

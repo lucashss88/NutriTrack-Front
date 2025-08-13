@@ -166,3 +166,29 @@
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
 }
+
+.meal-summary-list {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  font-size: 0.9em;
+}
+
+.meal-summary-list li {
+  background-color: #e6ffe6;
+  border-left: 3px solid #97D487;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-summary-list li:last-child {
+  margin-bottom: 0;
+}
+
+.meal-summary-list strong {
+  color: #6CA65E;
+}

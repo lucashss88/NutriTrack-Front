@@ -1,8 +1,8 @@
 import 'react-toastify/dist/ReactToastify.css';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import api from '../../services/api';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import {useNavigate} from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 const ListFoods = () => {
     const [foods, setFoods] = useState([]);
@@ -94,21 +94,21 @@ const ListFoods = () => {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this food?')) {
+        if (window.confirm('Você tem certeza que quer remover esse alimento?')) {
             try {
                 const token = loadToken();
                 // eslint-disable-next-line no-template-curly-in-string
-                await api.delete('/api/foods/${id}', {
+                await api.delete(`/api/foods/${id}`, {
                     headers: {
                         'x-auth-token': token
                     }
                 });
-                toast.success(`Food removed!`);
+                toast.success('Alimento removido com sucesso!');
                 setFoods(foods.filter(food => food.id !== id));
             } catch (error) {
                 console.error('Error deleting food:', error);
                 setError('Error deleting food');
-                toast.error('Error deleting food. Try again!');
+                toast.error('Erro ao deletar alimento. Tente novamente!');
             }
         }
     };
@@ -127,7 +127,14 @@ const ListFoods = () => {
 
     return (
         <div className="p-3 fs-6 d-flex flex-column">
-            <h1 className="fs-2">Lista de Alimentos</h1>
+            <div className="d-flex justify-content-between align-items-center">
+                <h1 className="fs-2">Lista de Alimentos</h1>
+                <div className="justify-content-end">
+                    <button className="btn-nutritrack" onClick={() => navigate('/food-form')}>
+                        Criar Novo Alimento
+                    </button>
+                </div>
+            </div>
             <div>
                 <label>Escolha o Grupo de Alimento: </label>
                 <select
@@ -148,11 +155,11 @@ const ListFoods = () => {
             <table>
                 <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Proteínas</th>
-                    <th>Calorias</th>
-                    <th>Grupo de Alimento</th>
-                    <th>Ações</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Proteínas</th>
+                    <th scope="col">Calorias</th>
+                    <th scope="col">Grupo de Alimento</th>
+                    <th scope="col" className="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -162,10 +169,17 @@ const ListFoods = () => {
                         <td>{food.protein}</td>
                         <td>{food.calories}</td>
                         <td>{food.foodGroup}</td>
-                        <td>
-                            <button onClick={() => navigateToUpdate(food.id)} className="btn-nutritrack mx-1">Editar</button>
-                            <button onClick={() => navigateToView(food.id)} className="btn-nutritrack mx-1">Visualizar</button>
-                            <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar</button>
+                        <td className="text-center">
+                            <div className="d-md-flex justify-content-center align-items-center">
+                                <button onClick={() => navigateToUpdate(food.id)}
+                                        className="btn-nutritrack mx-1">Editar
+                                </button>
+                                <button onClick={() => navigateToView(food.id)}
+                                        className="btn-nutritrack mx-1">Visualizar
+                                </button>
+                                <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 ))}
@@ -176,7 +190,8 @@ const ListFoods = () => {
                     Anterior
                 </button>
                 <span>Page {currentPage} of {totalPages}</span>
-                <button className="navbar-link border-0 ms-1" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                <button className="navbar-link border-0 ms-1" onClick={handleNextPage}
+                        disabled={currentPage === totalPages}>
                     Próximo
                 </button>
             </div>

@@ -41,6 +41,12 @@ const Home = () => {
                     description: "Acesse relatórios e estatísticas detalhadas sobre planos e progresso.",
                     icon: "bi bi-graph-up",
                     status: "Em Breve"
+                },
+                {
+                    title: "Adicionar refeições substitutas",
+                    description: "Adicione refeições substitutas nas dietas, para flexibilizar a dieta dos clientes.",
+                    icon: "bi bi-fork-knife",
+                    status: "Em Breve"
                 }
             ];
         } else {
@@ -87,9 +93,9 @@ const Home = () => {
                     {getFeatures().map((feature, index) => (
                         <div className="col" key={index}>
                             <div
-                                className={`card h-100 card-feature ${feature.status === "Em Breve" ? 'opacity-75' : ''}`} // Diminui a opacidade para "Em Breve"
-                                onClick={() => feature.status !== "Em Breve" && navigate(feature.link)} // Desabilita o clique se "Em Breve"
-                                style={{ cursor: feature.status === "Em Breve" ? 'not-allowed' : 'pointer' }} // Altera o cursor
+                                className={`card h-100 card-feature ${feature.status === "Em Breve" ? 'opacity-75' : ''}`}
+                                onClick={() => feature.status !== "Em Breve" && navigate(feature.link)}
+                                style={{ cursor: feature.status === "Em Breve" ? 'not-allowed' : 'pointer' }}
                             >
                                 <div className="card-body">
                                     <div className="icon-circle mb-3">
@@ -112,7 +118,7 @@ const Home = () => {
                 </p>
                 {role === 'patient' && (
                     <button
-                        className="btn btn-lg btn-success" // Mantendo o botão primário do Bootstrap
+                        className="btn btn-lg btn-success"
                         onClick={() => navigate('/patient/diets')}
                     >
                         <i className="bi bi-star me-2"></i> Explorar Meu Plano
@@ -120,7 +126,7 @@ const Home = () => {
                 )}
                 {role === 'nutricionist' && (
                     <button
-                        className="btn btn-lg btn-outline-success" // Mantendo o botão primário do Bootstrap
+                        className="btn btn-lg btn-success"
                         onClick={() => navigate('/listpatients')}
                     >
                         <i className="bi bi-arrow-right me-2"></i> Começar a Gerenciar Pacientes
