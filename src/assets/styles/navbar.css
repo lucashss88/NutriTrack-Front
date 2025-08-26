@@ -1,18 +1,16 @@
-/* Container principal da Navbar */
 .navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #fff; /* Fundo branco */
-    border-bottom: 2px solid #e0e0e0; /* Linha separadora */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    background-color: #fff;
+    border-bottom: 2px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-/* Logo e título */
 .navbar-logo .navbar-title {
     font-size: 24px;
     font-weight: bold;
@@ -22,13 +20,12 @@
 }
 
 .navbar-logo .navbar-title:hover {
-    color: #518c46; /* Cor ao passar o mouse */
+    color: #518c46;
 }
 
-/* Links na Navbar */
 .navbar-links {
     display: flex;
-    gap: 20px; /* Espaçamento entre os itens */
+    gap: 20px;
 }
 
 .navbar-link {
@@ -41,13 +38,32 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Efeito de hover nos links */
+.navbar-links-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 5rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+    z-index: 1200;
+}
+
 .navbar-link:hover {
     background-color: #7EBE68;
     color: white;
 }
 
-/* Estilização para o link de logout */
 .navbar-link.logout {
     color: #dc3545;
     font-weight: bold;
@@ -58,7 +74,11 @@
     color: #a71d2a;
 }
 
-/* Responsividade: ajuste para telas menores */
+.navbar-toggle {
+    visibility: hidden;
+    z-index: 4000;
+}
+
 @media (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
@@ -66,16 +86,39 @@
         padding: 10px;
     }
 
-    .navbar-links {
-        flex-direction: column;
-        gap: 10px;
+    .navbar-logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
-        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .navbar-toggle {
+        visibility: visible;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+
+    .navbar-links-mobile.active {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    .navbar-links {
+        display: none;
     }
 
     .navbar-link {
         width: 100%;
-        text-align: left;
+        text-align: center;
         padding: 10px;
+    }
+
+    .navbar-link:hover {
+        color: #7EBE68;
     }
 }
