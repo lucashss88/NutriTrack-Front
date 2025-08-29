@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
-import BackButton from '../backbutton';
 import {useNavigate} from 'react-router-dom';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import {Document, Packer, Paragraph, Table, TableRow, TableCell, WidthType, HeadingLevel} from "docx";
-import {saveAs} from "file-saver";
 import DownloadModal from '../downloadModal';
 import {generateDOCX, generatePDF} from "./downloadDiets";
 
@@ -66,7 +62,7 @@ const ListDietsForPatient = () => {
     };
 
     return (
-        <div className="p-3 fs-6">
+        <div className="p-3 fs-6 list-diets">
             <h1 className="fs-2">Dietas dos Pacientes</h1>
             <table>
                 <thead>

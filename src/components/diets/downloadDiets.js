@@ -5,16 +5,14 @@ import { saveAs } from "file-saver";
 
 export function generatePDF(diet) {
     const doc = new jsPDF();
-    const margin = 20; // Margem padrão
-    let yPos = margin; // Posição Y atual no documento
+    const margin = 20;
+    let yPos = margin;
 
-    // Título Principal
     doc.setFontSize(18);
-    doc.setTextColor(50, 50, 50); // Cor de texto mais escura para títulos
+    doc.setTextColor(50, 50, 50);
     doc.text('Relatório de Dieta NutriTrack', margin, yPos);
     yPos += 15;
 
-    // Informações Básicas da Dieta
     doc.setFontSize(12);
     doc.setTextColor(80, 80, 80);
     doc.text(`Paciente: ${diet.patient?.username || 'N/A'}`, margin, yPos);
@@ -22,32 +20,29 @@ export function generatePDF(diet) {
     doc.text(`Data de Início: ${new Date(diet.startDate).toLocaleDateString('pt-BR')}`, margin, yPos);
     yPos += 7;
     doc.text(`Data Final: ${new Date(diet.endDate).toLocaleDateString('pt-BR')}`, margin, yPos);
-    yPos += 15; // Espaço antes da tabela de refeições
+    yPos += 15;
 
-    // Tabela de Refeições e Alimentos
     const columns = ["Refeição / Tipo", "Alimento / Item", "Quantidade", "Observação"];
     const rows = [];
 
     if (diet.Meals && diet.Meals.length > 0) {
         diet.Meals.forEach((meal, mealIndex) => {
-            let isFirstFoodInMeal = true; // Flag para garantir que o tipo da refeição e a observação principal apareçam uma vez por refeição
+            let isFirstFoodInMeal = true;
 
             if (meal.Food && meal.Food.length > 0) {
                 meal.Food.forEach((mealFood) => {
                     rows.push([
-                        isFirstFoodInMeal ? meal.type : '', // Mostra o tipo da refeição apenas na primeira linha
+                        isFirstFoodInMeal ? meal.type : '',
                         mealFood.name,
-                        `${mealFood.MealFood?.quantity || 0}g`, // Acesso seguro à quantidade
-                        isFirstFoodInMeal && meal.observation ? meal.observation : '' // Mostra a observação principal apenas na primeira linha
+                        `${mealFood.MealFood?.quantity || 0}g`,
+                        isFirstFoodInMeal && meal.observation ? meal.observation : ''
                     ]);
-                    isFirstFoodInMeal = false; // Desativa a flag após a primeira linha
+                    isFirstFoodInMeal = false;
                 });
             } else {
-                // Se a refeição não tiver alimentos, adiciona uma linha indicando
                 rows.push([meal.type, 'Nenhum alimento especificado.', '', meal.observation || '']);
             }
 
-            // Adiciona um separador entre as refeições, se não for a última
             if (mealIndex < diet.Meals.length - 1) {
                 rows.push([{ content: '', colSpan: columns.length, styles: { minCellHeight: 5, fillColor: [230, 230, 230] } }]);
             }
@@ -59,26 +54,24 @@ export function generatePDF(diet) {
     doc.autoTable({
         head: [columns],
         body: rows,
-        startY: yPos, // Inicia a tabela após as informações básicas
+        startY: yPos,
         headStyles: { fillColor: [126, 190, 104], textColor: [255, 255, 255], fontStyle: 'bold' },
         alternateRowStyles: { fillColor: [245, 255, 240] },
         styles: { fontSize: 10, cellPadding: 3, rowPageBreak: 'auto', halign: 'left', valign: 'middle' },
         columnStyles: {
-            0: { cellWidth: 40 }, // Refeição / Tipo
-            1: { cellWidth: 'auto' }, // Alimento / Item
-            2: { cellWidth: 25, halign: 'center' }, // Quantidade
-            3: { cellWidth: 'auto' } // Observação
+            0: { cellWidth: 40 },
+            1: { cellWidth: 'auto' },
+            2: { cellWidth: 25, halign: 'center' },
+            3: { cellWidth: 'auto' }
         },
-        // Callback para adicionar cabeçalho/rodapé em cada página (se a tabela for longa)
         didDrawPage: function (data) {
             doc.setFontSize(8);
             doc.setTextColor(150);
             doc.text(`Gerado por NutriTrack - Página ${data.pageNumber}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
         },
-        // Callback para estilos de células específicas
         didParseCell: function (data) {
             if (data.section === 'head') {
-                data.cell.styles.fillColor = [126, 190, 104]; // Corrigindo a cor do cabeçalho
+                data.cell.styles.fillColor = [126, 190, 104];
                 data.cell.styles.textColor = [255, 255, 255];
             }
         }
@@ -121,16 +114,15 @@ export function generateDOCX(diet) {
                     new Paragraph({
                         text: `Observação: ${meal.observation}`,
                         heading: HeadingLevel.TEXT,
-                        indent: { left: 720 }, // 0.5 inch (720 twips = 0.5 inch)
+                        indent: { left: 720 },
                         font: "Arial",
-                        size: 20, // 10pt
+                        size: 20,
                         run: { italics: true }
                     })
                 );
             }
 
             const mealFoodsTableRows = [];
-            // Header for food table within meal
             mealFoodsTableRows.push(
                 new TableRow({
                     children: [
@@ -169,7 +161,7 @@ export function generateDOCX(diet) {
                         size: 80,
                         type: WidthType.PERCENTAGE,
                     },
-                    margins: { // Adiciona margens à tabela para separá-la
+                    margins: {
                         top: 100,
                         bottom: 100,
                         left: 100
@@ -177,7 +169,6 @@ export function generateDOCX(diet) {
                 })
             );
 
-            // Add substitutes if any
             if (meal.Substitutes && meal.Substitutes.length > 0) {
                 sectionsChildren.push(
                     new Paragraph({
@@ -201,7 +192,7 @@ export function generateDOCX(diet) {
                                 heading: HeadingLevel.TEXT,
                                 indent: { left: 720 },
                                 font: "Arial",
-                                size: 18, // 9pt
+                                size: 18,
                                 run: { italics: true }
                             })
                         );
@@ -244,7 +235,7 @@ export function generateDOCX(diet) {
                                 size: 70,
                                 type: WidthType.PERCENTAGE,
                             },
-                            margins: { // Margens para tabelas de substitutos
+                            margins: {
                                 top: 50,
                                 bottom: 50,
                                 left: 100
@@ -268,4 +259,4 @@ export function generateDOCX(diet) {
     }).catch((error) => {
         console.error("Erro ao gerar o arquivo DOCX:", error);
     });
-};
+}

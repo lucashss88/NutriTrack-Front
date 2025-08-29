@@ -11,12 +11,34 @@ const Navbar = () => {
         navigate('/');
     };
 
+    const handleMenuToggle = () => {
+        document.querySelector('.navbar-links-mobile').classList.toggle('active');
+    }
+
     return (
         <header className="navbar-container">
             <div className="navbar-logo">
                 <a href="/home" className="navbar-title">NutriTrack</a>
+                <button className="navbar-toggle" onClick={handleMenuToggle}><i className="bi bi-list"></i></button>
             </div>
             <nav className="navbar-links">
+                {role === 'nutricionist' && (
+                    <>
+                        <a href="/nutricionist/diets" className="navbar-link">Listar Dietas</a>
+                        <a href="/listfoods" className="navbar-link">Listar Alimentos</a>
+                        <a href="/listpatients" className="navbar-link">Listar Pacientes</a>
+                        <a href="/diet-form" className="navbar-link">Criar Dieta</a>
+                        <a href="/food-form" className="navbar-link">Criar Alimento</a>
+                    </>
+                )}
+                {role === 'patient' && (
+                    <>
+                        <a href="/patient/diets" className="navbar-link">Listar Dietas</a>
+                    </>
+                )}
+                <a href="/" onClick={handleLogout} className="navbar-link logout">Sair</a>
+            </nav>
+            <nav className="navbar-links-mobile">
                 {role === 'nutricionist' && (
                     <>
                         <a href="/nutricionist/diets" className="navbar-link">Listar Dietas</a>

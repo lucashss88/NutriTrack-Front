@@ -9,11 +9,26 @@
   border-radius: 15px;
 }
 
+.btn-nutritrack{
+  padding: 6px;
+  background-color: #7EBE68;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
 
+.btn-nutritrack:hover{
+  background-color: #45832e;
+}
+
+.btn-nutritrack-mobile {
+  visibility: hidden;
+}
 
 .list-diets{
   padding: 20px;
   font-size: 18px;
+  overflow-x: auto;
 }
 
 .label-diets{
@@ -147,7 +162,7 @@
 
 .meal-item {
   margin-bottom: 0.5rem;
-  padding-left: 1rem; /* Indentação para alimentos */
+  padding-left: 1rem;
   border-left: 3px solid #97D487;
   display: flex;
   justify-content: space-between;
@@ -191,4 +206,15 @@
 
 .meal-summary-list strong {
   color: #6CA65E;
+}
+
+@media (max-width: 768px) {
+  .meal-card-body {
+    padding: 1.5rem;
+  }
+
+  .btn-nutritrack {
+    width: auto;
+    font-size: 14px;
+  }
 }
