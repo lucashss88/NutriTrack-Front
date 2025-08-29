@@ -62,7 +62,7 @@ const ListDietsForPatient = () => {
     };
 
     return (
-        <div className="p-3 fs-6">
+        <div className="p-3 fs-6 list-diets">
             <h1 className="fs-2">Dietas dos Pacientes</h1>
             <table>
                 <thead>

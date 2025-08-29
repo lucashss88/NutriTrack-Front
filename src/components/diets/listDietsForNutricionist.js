@@ -86,8 +86,12 @@ const ListDietsForNutricionist = () => {
         setIsModalOpen(false);
     };
 
+    const handleMobile = () => {
+
+    }
+
     return (
-        <div className="p-3 fs-6">
+        <div className="p-3 fs-6 list-diets">
             <div className="d-flex justify-content-between align-items-center">
                 <h1 className="fs-2">Dietas dos Pacientes</h1>
                 <div className="justify-content-end">
@@ -128,14 +132,15 @@ const ListDietsForNutricionist = () => {
 
                         <td className="text-center">
                             <div className="d-md-flex justify-content-center align-items-center">
-                                <button onClick={() => handleEditDiet(diet.id)} className="btn-nutritrack mx-1">Editar
+                                <button onClick={() => handleEditDiet(diet.id)} className="btn-nutritrack mx-1 my-1 my-md-0">Editar
                                 </button>
-                                <button onClick={() => handleViewDiet(diet.id)} className="btn-nutritrack mx-1">Visualizar
+                                <button onClick={() => handleViewDiet(diet.id)} className="btn-nutritrack mx-1 my-1 my-md-0">Visualizar
                                 </button>
-                                <button onClick={() => handleDownloadClick(diet)} className="btn-nutritrack mx-1">Download
+                                <button onClick={() => handleDownloadClick(diet)} className="btn-nutritrack mx-1 my-1 my-md-0">Download
                                 </button>
-                                <button onClick={() => handleDeleteDiet(diet.id)} className="btn btn-danger mx-1">Deletar
+                                <button onClick={() => handleDeleteDiet(diet.id)} className="btn btn-danger mx-1 my-1 my-md-0">Deletar
                                 </button>
+                                <button className="btn-nutritrack-mobile"><i className="bi bi-three-dots"></i></button>
                             </div>
                         </td>
                     </tr>
