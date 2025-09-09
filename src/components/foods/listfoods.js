@@ -150,8 +150,6 @@ const ListFoods = () => {
                     ))}
                 </select>
             </div>
-
-            {noFoodsMessage && <p>{noFoodsMessage}</p>}
             <table>
                 <thead>
                 <tr>
@@ -163,26 +161,29 @@ const ListFoods = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredFoods.map((food) => (
-                    <tr key={food.id}>
-                        <td>{food.name}</td>
-                        <td>{food.protein}</td>
-                        <td>{food.calories}</td>
-                        <td>{food.foodGroup}</td>
-                        <td className="text-center">
-                            <div className="d-md-flex justify-content-center align-items-center">
-                                <button onClick={() => navigateToUpdate(food.id)}
-                                        className="btn-nutritrack mx-1">Editar
-                                </button>
-                                <button onClick={() => navigateToView(food.id)}
-                                        className="btn-nutritrack mx-1">Visualizar
-                                </button>
-                                <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                ))}
+                    {filteredFoods.length > 0 && (
+                        filteredFoods.map((food) => (
+                            <tr key={food.id}>
+                                <td>{food.name}</td>
+                                <td>{food.protein}</td>
+                                <td>{food.calories}</td>
+                                <td>{food.foodGroup}</td>
+                                <td className="text-center">
+                                    <div className="d-md-flex justify-content-center align-items-center">
+                                        <button onClick={() => navigateToUpdate(food.id)}
+                                                className="btn-nutritrack mx-1">Editar
+                                        </button>
+                                        <button onClick={() => navigateToView(food.id)}
+                                                className="btn-nutritrack mx-1">Visualizar
+                                        </button>
+                                        <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                    )}
+                    {filteredFoods.length === 0 && (<p>{noFoodsMessage}</p>)}
                 </tbody>
             </table>
             <div className="pagination">
