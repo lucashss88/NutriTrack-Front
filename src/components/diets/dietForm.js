@@ -70,18 +70,18 @@ const DietForm = () => {
           foodIds: group.food ? [group.food.id] : [],
           quantities: group.food ? [group.quantity] : [],
         })),
-        substitutes: meal.substitutes?.map(substitute => ({
-          type: substitute.mealType,
-          observation: substitute.observation || '',
-          foodGroups: substitute.foodGroups.map(group => ({
-            foodIds: group.food ? [group.food.id] : [],
-            quantities: group.food ? [group.quantity] : [],
-            substitutes: group.substitutes.map(sub => ({
-              id: sub.id,
-              name: sub.name,
-            })),
-          }))
-        })) || []
+        // substitutes: meal.substitutes?.map(substitute => ({
+        //   type: substitute.mealType,
+        //   observation: substitute.observation || '',
+        //   foodGroups: substitute.foodGroups.map(group => ({
+        //     foodIds: group.food ? [group.food.id] : [],
+        //     quantities: group.food ? [group.quantity] : [],
+        //     substitutes: group.substitutes.map(sub => ({
+        //       id: sub.id,
+        //       name: sub.name,
+        //     })),
+        //   }))
+        // })) || []
       }))
     };
 
@@ -97,7 +97,7 @@ const DietForm = () => {
         }
       });
       toast.success('Dieta criada com sucesso!');
-      setMeals([]); // Limpar as refeições após criação da dieta
+      setMeals([]);
       localStorage.removeItem('dietFormData');
       console.log(response.data);
       navigate('/home');

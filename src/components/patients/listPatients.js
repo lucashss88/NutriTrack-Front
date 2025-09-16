@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
-import Backbutton from '../backbutton';
 import { calculateIMC, getIMCCategory } from './calcIMC';
 
 const ListPatients = () => {

@@ -9,9 +9,9 @@ const ListFoods = () => {
     const [foodGroups, setFoodGroups] = useState([]);
     const [selectedFoodGroup, setSelectedFoodGroup] = useState('');
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [noFoodsMessage, setNoFoodsMessage] = useState('');
     const itemsPerPage = 20;
     const navigate = useNavigate();
 
@@ -41,6 +41,8 @@ const ListFoods = () => {
 
     useEffect(() => {
         const fetchFoods = async () => {
+            setIsLoading(true);
+            setError(null);
             try {
                 const token = loadToken();
                 const response = await api.get('/api/foods', {
@@ -56,17 +58,14 @@ const ListFoods = () => {
 
                 const fetchedFoods = response.data.foods;
 
-                if (fetchedFoods.length === 0) {
-                    setNoFoodsMessage('Nenhum alimento encontrado para este grupo.');
-                } else {
-                    setNoFoodsMessage('');
-                }
-
                 setFoods(fetchedFoods);
                 setTotalPages(Math.ceil(response.data.total / itemsPerPage));
             } catch (error) {
                 console.error('Error fetching foods:', error);
-                setError('Error fetching foods');
+                const errorMessage = error.response?.data?.msg || 'Não foi possível carregar os alimentos.';
+                setError(errorMessage);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -150,52 +149,62 @@ const ListFoods = () => {
                     ))}
                 </select>
             </div>
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Proteínas</th>
-                    <th scope="col">Calorias</th>
-                    <th scope="col">Grupo de Alimento</th>
-                    <th scope="col" className="text-center">Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {filteredFoods.length > 0 && (
-                        filteredFoods.map((food) => (
-                            <tr key={food.id}>
-                                <td>{food.name}</td>
-                                <td>{food.protein}</td>
-                                <td>{food.calories}</td>
-                                <td>{food.foodGroup}</td>
-                                <td className="text-center">
-                                    <div className="d-md-flex justify-content-center align-items-center">
-                                        <button onClick={() => navigateToUpdate(food.id)}
-                                                className="btn-nutritrack mx-1">Editar
-                                        </button>
-                                        <button onClick={() => navigateToView(food.id)}
-                                                className="btn-nutritrack mx-1">Visualizar
-                                        </button>
-                                        <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))
-                    )}
-                    {filteredFoods.length === 0 && (<p>{noFoodsMessage}</p>)}
-                </tbody>
-            </table>
-            <div className="pagination">
-                <button className="navbar-link border-0 me-1" onClick={handlePreviousPage} disabled={currentPage === 1}>
-                    Anterior
-                </button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button className="navbar-link border-0 ms-1" onClick={handleNextPage}
-                        disabled={currentPage === totalPages}>
-                    Próximo
-                </button>
-            </div>
+            {isLoading ? (
+                <p>A carregar alimentos...</p>
+            ) : error ? (
+                <p className="text-danger">{error}</p>
+            ) : foods.length > 0 ? (
+                <>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Proteínas</th>
+                            <th scope="col">Calorias</th>
+                            <th scope="col">Grupo de Alimento</th>
+                            <th scope="col" className="text-center">Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {filteredFoods.length > 0 && (
+                                filteredFoods.map((food) => (
+                                    <tr key={food.id}>
+                                        <td>{food.name}</td>
+                                        <td>{food.protein}</td>
+                                        <td>{food.calories}</td>
+                                        <td>{food.foodGroup}</td>
+                                        <td className="text-center">
+                                            <div className="d-md-flex justify-content-center align-items-center">
+                                                <button onClick={() => navigateToUpdate(food.id)}
+                                                        className="btn-nutritrack mx-1">Editar
+                                                </button>
+                                                <button onClick={() => navigateToView(food.id)}
+                                                        className="btn-nutritrack mx-1">Visualizar
+                                                </button>
+                                                <button onClick={() => handleDelete(food.id)} className="btn btn-danger mx-1">Deletar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                            
+                        </tbody>
+                    </table>
+                    <div className="pagination">
+                        <button className="navbar-link border-0 me-1" onClick={handlePreviousPage} disabled={currentPage === 1}>
+                            Anterior
+                        </button>
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <button className="navbar-link border-0 ms-1" onClick={handleNextPage}
+                                disabled={currentPage === totalPages}>
+                            Próximo
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <p>Nenhum alimento encontrado para este grupo.</p>
+            )}
         </div>
     );
 };
