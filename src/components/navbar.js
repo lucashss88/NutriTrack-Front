@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Navbar = () => {
-    const { role, logout } = useAuth();
+    const { role, logout, user } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -13,6 +13,10 @@ const Navbar = () => {
 
     const handleMenuToggle = () => {
         document.querySelector('.navbar-links-mobile').classList.toggle('active');
+    }
+
+    const handleUserMenuToggle = () => {
+        document.querySelector('.user-menu-mobile').classList.toggle('active');
     }
 
     return (
@@ -36,7 +40,9 @@ const Navbar = () => {
                         <a href="/patient/diets" className="navbar-link">Listar Dietas</a>
                     </>
                 )}
-                <a href="/" onClick={handleLogout} className="navbar-link logout">Sair</a>
+                <button className="navbar-link" onClick={handleUserMenuToggle}>
+                    {user?.username || 'Usuário'}
+                </button>
             </nav>
             <nav className="navbar-links-mobile">
                 {role === 'nutricionist' && (
@@ -53,7 +59,12 @@ const Navbar = () => {
                         <a href="/patient/diets" className="navbar-link">Listar Dietas</a>
                     </>
                 )}
-                <a href="/" onClick={handleLogout} className="navbar-link logout">Sair</a>
+                <a className='navbar-link' href='/edit-profile'>Editar Usuário</a>
+                <button className='navbar-link logout' onClick={handleLogout}>Sair</button>
+            </nav>
+            <nav className="user-menu-mobile">
+                <a href='/edit-profile'>Editar Usuário</a>
+                <a className='logout' href onClick={handleLogout}>Sair</a>
             </nav>
         </header>
     );

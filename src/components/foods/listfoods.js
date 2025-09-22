@@ -19,7 +19,6 @@ const ListFoods = () => {
         return localStorage.getItem('token');
     };
 
-
     useEffect(() => {
         const fetchFoodGroups = async () => {
             try {
