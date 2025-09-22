@@ -33,6 +33,7 @@ import './assets/styles/downloadModal.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from "./pages/layout";
+import EditUser from './pages/editUser';
 
 const App = () => {
     return (
@@ -50,6 +51,11 @@ const App = () => {
                     <Route path="/add-meal" element={
                         <ProtectedRoute allowedRoles={['nutricionist']}>
                             <AddMealForm />
+                        </ProtectedRoute>}
+                    />
+                    <Route path="/edit-profile" element={
+                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                            <EditUser />
                         </ProtectedRoute>}
                     />
                     <Route path="/food-form/:id" element={
