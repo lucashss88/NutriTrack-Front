@@ -1,70 +1,110 @@
-# Getting Started with Create React App
+# NutriTrack Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sistema de gerenciamento nutricional que conecta nutricionistas e pacientes para acompanhamento de dietas e planos alimentares.
 
-## Available Scripts
+## Funcionalidades Principais
 
-In the project directory, you can run:
+### Para Nutricionistas
+- Cadastro e gerenciamento de alimentos com informações nutricionais
+- Criação e edição de dietas personalizadas com refeições
+- Gerenciamento de pacientes e cálculo de IMC
+- Visualização e acompanhamento de dietas dos pacientes
+- Exportação de dietas em PDF e DOCX com formatação profissional
+- Adição de refeições substitutas e observações
 
-### `npm start`
+### Para Pacientes
+- Visualização de dietas prescritas pelo nutricionista
+- Acompanhamento do progresso alimentar
+- Edição de refeições realizadas
+- Acesso ao histórico de dietas
+- Portal personalizado para interação com o plano alimentar
 
-Runs the app in the development mode.\
-Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
+### Funcionalidades Gerais
+- Sistema de autenticação com controle de acesso por perfil
+- Interface responsiva e intuitiva
+- Notificações em tempo real
+- Proteção de rotas baseada em roles
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Stack Tecnológica
 
-### `npm test`
+- **Frontend**: React 18.3.1
+- **Roteamento**: React Router DOM 6.24.1
+- **UI Framework**: Bootstrap 5.3.6 + React Bootstrap 2.10.10
+- **Estilização**: CSS customizado + Tailwind CSS 4.1.10
+- **HTTP Client**: Axios 1.3.1
+- **Geração de Documentos**: jsPDF 2.5.1 + docx 8.5.0
+- **Notificações**: React Toastify 10.0.5
+- **Ícones**: Bootstrap Icons 1.13.1
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Como Rodar Localmente
 
-### `npm run build`
+### Pré-requisitos
+- Node.js (versão 16 ou superior)
+- npm ou yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Instalação
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone o repositório:
+```bash
+git clone <url-do-repositorio>
+cd nutritrack-front
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Instale as dependências:
+```bash
+npm install
+```
 
-### `npm run eject`
+3. Configure as variáveis de ambiente:
+   - Crie um arquivo `.env` na raiz do projeto
+   - Configure a URL da API backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Execute o projeto:
+```bash
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. Acesse a aplicação em [http://localhost:3000](http://localhost:3000)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Deploy
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+A aplicação está disponível online em: **[https://nutri-track-front.vercel.app/](https://nutri-track-front.vercel.app/)**
 
-## Learn More
+Deploy realizado na Vercel com integração contínua.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Scripts Disponíveis
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `npm start` - Executa a aplicação em modo de desenvolvimento
+- `npm test` - Executa os testes
+- `npm run build` - Gera build de produção
+- `npm run eject` - Ejeta as configurações do Create React App
 
-### Code Splitting
+## Estrutura do Projeto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+src/
+├── components/          # Componentes reutilizáveis
+│   ├── diets/          # Componentes relacionados a dietas
+│   │   ├── dietForm.js         # Formulário de criação de dietas
+│   │   ├── editDietPatient.js  # Edição de dietas pelo paciente
+│   │   ├── editDietNutricionist.js # Edição pelo nutricionista
+│   │   ├── downloadDiets.js    # Geração de PDF/DOCX
+│   │   └── viewDiet.js         # Visualização de dietas
+│   ├── foods/          # Componentes de gerenciamento de alimentos
+│   │   ├── foodForm.js         # Cadastro de alimentos
+│   │   ├── listfoods.js        # Listagem de alimentos
+│   │   └── viewFood.js         # Visualização de alimentos
+│   └── patients/       # Componentes de pacientes
+│       ├── listPatients.js     # Lista de pacientes
+│       └── calcIMC.js          # Calculadora de IMC
+├── pages/              # Páginas principais (login, home, etc.)
+├── services/           # Serviços de API (axios)
+├── context/            # Contextos React (auth, meals)
+├── hooks/              # Hooks customizados (useAuth)
+└── assets/             # Recursos estáticos (CSS, imagens)
+```
 
-### Analyzing the Bundle Size
+## Repositórios
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Frontend**: [https://github.com/lucashss88/NutriTrack-Front](https://github.com/lucashss88/NutriTrack-Front)
+- **Backend**: [https://github.com/lucashss88/NutriTrack-Back](https://github.com/lucashss88/NutriTrack-Back)
