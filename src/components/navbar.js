@@ -1,14 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Navbar = () => {
     const { role, logout, user } = useAuth();
-    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
-        navigate('/');
     };
 
     const handleMenuToggle = () => {
@@ -64,7 +62,7 @@ const Navbar = () => {
             </nav>
             <nav className="user-menu-mobile">
                 <a href='/edit-profile'>Editar Usuário</a>
-                <a className='logout' href onClick={handleLogout}>Sair</a>
+                <Link to="/" className='logout' onClick={handleLogout}>Sair</Link>
             </nav>
         </header>
     );

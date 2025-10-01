@@ -54,7 +54,7 @@ const App = () => {
                         </ProtectedRoute>}
                     />
                     <Route path="/edit-profile" element={
-                        <ProtectedRoute allowedRoles={['nutricionist']}>
+                        <ProtectedRoute allowedRoles={['nutricionist', 'patient']}>
                             <EditUser />
                         </ProtectedRoute>}
                     />
